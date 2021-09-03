@@ -1,4 +1,4 @@
-import './sass/App.sass';
+import './sass/app.sass';
 import Header from './components/Header'
 import SearchBarContainer from './components/SearchBarContainer';
 import List from './components/List';
