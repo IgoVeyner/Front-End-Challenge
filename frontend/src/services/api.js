@@ -17,7 +17,4 @@ export const getCities = (searchTerm, offset = 0) => {
 
   return fetch(CreateCitiesUrlWithQuery())
   .then(data => data.json())
-  .then(parsed => {
-    return parsed
-  })
 }
