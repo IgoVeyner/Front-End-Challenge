@@ -40,8 +40,13 @@ const SearchBarContainer = ({ onSubmit }) => {
   useSearch(handleSubmit)
   
   return (
-    <div>
-      <input type="text" onChange={debouncedResults} />
+    <div className="search-container">
+      <input 
+        className="searchbar"
+        type="text" 
+        onChange={debouncedResults} 
+        placeholder="Type to filter by city name or country"
+      />
     </div>
   )
 }
