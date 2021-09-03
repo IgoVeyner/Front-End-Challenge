@@ -15,7 +15,9 @@ export const getCities = (searchTerm, offset = 0) => {
       limit + offsetPrefix + convertedOffset
   }
 
-  fetch(CreateCitiesUrlWithQuery())
+  return fetch(CreateCitiesUrlWithQuery())
   .then(data => data.json())
-  .then(parsed => console.log(parsed))
+  .then(parsed => {
+    return parsed
+  })
 }

@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { getCities } from '../services/api'
 
-const SearchBarContainer = () => {
+const SearchBarContainer = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const [offset, setOffset] = useState(0)
   
@@ -9,12 +9,19 @@ const SearchBarContainer = () => {
     setSearchTerm(e.target.value)
   }
 
+  const handleSubmit = () => {
+    getCities(searchTerm, offset)
+    .then(parsed => {
+      onSubmit(parsed)
+    })
+  }
+
   return (
     <div>
       <input type="text" value={searchTerm} onChange={handleChange} />
 
       {/* temp button */}
-      <button onClick={() => getCities(searchTerm, offset)}>Search</button>
+      <button onClick={handleSubmit}>Search</button>
     </div>
   )
 }
