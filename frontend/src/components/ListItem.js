@@ -1,10 +1,20 @@
 const ListItem = ({ city }) => {
   return (
-    <div>
-      <input type="checkbox" />
-      <h1>{city.name}</h1>
-      <p>{city.subcountry}</p>
-      <p>{city.country}</p>
+    <div className="list-item">
+      <div className="checkbox-container">
+        <input 
+          type="checkbox" 
+          className="input-checkbox"
+          />
+      </div>
+
+      <div className="city-text-container">
+        <h1 className="city-name">{city.name}</h1>
+
+        <div className="city-text">
+          {city.subcountry} - {city.country}
+        </div>
+      </div>
     </div>
   )
 }
