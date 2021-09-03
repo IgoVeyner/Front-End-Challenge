@@ -4,3 +4,10 @@ export const updateOffset = (number) => {
     payload: number
   }
 } 
+
+export const resetOffset = () => {
+  return {
+    type: "RESET_OFFSET",
+    payload: 0
+  }
+}
