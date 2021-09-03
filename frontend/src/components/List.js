@@ -1,4 +1,7 @@
-const List = ({ cities }) => {
+import { useSelector } from "react-redux"
+
+const List = () => {
+  const cities = useSelector(state => state.cities)
 
   const renderList = () => {
     return cities.data.map(city => {
@@ -15,7 +18,7 @@ const List = ({ cities }) => {
 
   return (
     <div>
-      {renderList()}
+      {cities.data ? renderList() : null}
     </div>
   )
 }
