@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import { updateOffset } from "../redux/actions/offsetActions"
+import ListItem from "./ListItem"
 
 const List = () => {
   const cities = useSelector(state => state.cities)
@@ -14,14 +15,7 @@ const List = () => {
 
   const renderList = () => {
     return cities.data.map(city => {
-      return (
-        <div key={city.geonameid}>
-          <input type="checkbox" />
-          <h1>{city.name}</h1>
-          <p>{city.subcountry}</p>
-          <p>{city.country}</p>
-        </div>
-      )
+      return <ListItem city={city} key={city.geonameid}/>
     })
   }
 
