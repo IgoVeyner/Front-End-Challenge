@@ -8,11 +8,9 @@ export const getCities = (searchTerm = '', offset = 0) => {
     offsetPrefix = '&offset='
 
   const CreateCitiesUrlWithQuery = () => {
-    const convertedOffset = (offset * 10)
-
     return citiesUrl + queryPrefix + 
       filterPrefix + searchTerm + 
-      limit + offsetPrefix + convertedOffset
+      limit + offsetPrefix + offset
   }
 
   return fetch(CreateCitiesUrlWithQuery())
