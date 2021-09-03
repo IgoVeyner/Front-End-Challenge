@@ -1,6 +1,6 @@
 import { useState, useCallback, useMemo } from 'react'
 import { getCities } from '../services/api'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setCities } from '../redux/actions/citiesActions'
 import useSearch from '../hooks/useSearch'
 import debounce from 'lodash.debounce';
@@ -8,7 +8,7 @@ import useDebounceCleanup from '../hooks/useDebounceCleanup'
 
 const SearchBarContainer = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('')
-  const [offset, setOffset] = useState(0)
+  const offset = useSelector(state => state.offset)
 
   const dispatch = useDispatch()
   
