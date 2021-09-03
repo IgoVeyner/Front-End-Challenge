@@ -1,8 +1,10 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { getCities } from '../services/api'
 import { useDispatch } from 'react-redux'
 import { setCities } from '../redux/actions/citiesActions'
 import useSearch from '../hooks/useSearch'
+import debounce from 'lodash.debounce';
+import useDebounceCleanup from '../hooks/useDebounceCleanup'
 
 const SearchBarContainer = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -23,11 +25,17 @@ const SearchBarContainer = ({ onSubmit }) => {
     })
   }, [searchTerm, offset, dispatch])
 
+  
+  const debouncedResults = useMemo(() => {
+    return debounce(handleChange, 400)
+  }, [])
+  
+  useDebounceCleanup(debouncedResults)
   useSearch(handleSubmit)
-
+  
   return (
     <div>
-      <input type="text" value={searchTerm} onChange={handleChange} />
+      <input type="text" onChange={debouncedResults} />
     </div>
   )
 }
