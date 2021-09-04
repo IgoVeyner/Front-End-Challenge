@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
 import Checkbox from "./Checkbox"
 import { updatePreferences } from '../services/api'
+import { handleCheckboxError } from '../services/errors'
 
 const ListItem = ({ city }) => {
   const [checked, setChecked] = useState("UNCHECKED")
@@ -9,11 +10,13 @@ const ListItem = ({ city }) => {
 
   const handleClick = () => setChecked("PENDING")
 
-  // TODO add error console message
+  // TODO fetch new preferences on completion
   const onCheck = useCallback(() => {
     updatePreferences(city.geonameid, "ADD")
     .then(resp => {
+      // 500 error comes back as false positive
       if (resp.status === 500) {
+        handleCheckboxError(resp, "Add")
         setChecked("UNCHECKED")
       } else {
         previousState.current = "CHECKED"
@@ -21,16 +24,19 @@ const ListItem = ({ city }) => {
       }
     })
     .catch(error => {
-      console.log(error)
+      // Does not catch 500 error
+      handleCheckboxError(error, "ADD")
     })
     }, [city.geonameid]
   )
   
-  // TODO add error console message
+  // TODO fetch new preferences on completion
   const onUncheck = useCallback(() => {
     updatePreferences(city.geonameid, "REMOVE")
     .then(resp => {
+      // 500 error comes back as false positive
       if (resp.status === 500) {
+        handleCheckboxError(resp, "Remove")
         setChecked("CHECKED")
       } else {
         previousState.current = "UNCHECKED"
@@ -38,7 +44,8 @@ const ListItem = ({ city }) => {
       }
     })
     .catch(error => {
-      console.log(error)
+      // Does not catch 500 error
+      handleCheckboxError(error, "Remove")
     })
     }, [city.geonameid]
   )
