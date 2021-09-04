@@ -1,6 +1,6 @@
-const handleLoading = (state = false, action) => {
+const handleSearchLoading = (state = false, action) => {
   switch (action.type) {
-    case "FETCHING":
+    case "FETCHING_CITIES":
       return action.payload
 
     case "SET_CITIES":
@@ -12,4 +12,4 @@ const handleLoading = (state = false, action) => {
   }
 }
 
-export default handleLoading
+export default handleSearchLoading

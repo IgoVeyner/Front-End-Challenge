@@ -1,6 +1,6 @@
 export const setLoading = () => {
   return {
-    type: "FETCHING",
+    type: "FETCHING_PREFERENCES",
     payload: true
   }
 }

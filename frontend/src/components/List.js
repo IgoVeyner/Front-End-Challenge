@@ -7,7 +7,7 @@ import SearchError from "./SearchError"
 const List = () => {
   const cities = useSelector(state => state.cities)
   const offset = useSelector(state => state.offset)
-  const loading = useSelector(state => state.loading)
+  const loading = useSelector(state => state.searchLoading)
   const searchError = useSelector(state => state.searchError)
 
   const dispatch = useDispatch()

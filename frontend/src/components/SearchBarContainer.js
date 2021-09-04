@@ -6,7 +6,7 @@ import { resetOffset } from "../redux/actions/offsetActions"
 import useSearch from '../hooks/useSearch'
 import debounce from 'lodash.debounce';
 import useDebounceCleanup from '../hooks/useDebounceCleanup'
-import { setLoading } from '../redux/actions/loadingActions'
+import { setLoading } from '../redux/actions/searchLoadingActions'
 import { setSearchError } from '../redux/actions/searchErrorActions'
 import { handleError } from '../services/errors'
 
@@ -32,7 +32,7 @@ const SearchBarContainer = ({ onSubmit }) => {
         updateCities(parsed)
     })
     .catch(error => {
-      
+
       // does not catch 500 error code
       handleError(error, setSearchErrorToTrue)
     })
