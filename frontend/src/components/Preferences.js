@@ -5,10 +5,10 @@ import Loading from "./Loading"
 import { setLoading } from "../redux/actions/preferencesLoadingActions"
 import { setPreferences } from "../redux/actions/preferencesActions"
 import useFetchRequest from "../hooks/useFetchRequest"
+import FavoritesList from './FavoritesList'
 
 const Preferences = () => {
   const loading = useSelector(state => state.preferencesLoading)
-  const favorites = useSelector(state => state.preferences)
 
   const dispatch = useDispatch()
   
@@ -32,9 +32,10 @@ const Preferences = () => {
   return (
     <div>
       <h2>Favorites</h2>
-      <div>
-        {loading ? <Loading /> : "done"}
-      </div>
+      {loading ? <Loading /> : (
+        // check for error before rendering
+        <FavoritesList />
+      )}
     </div>
   )
 }

@@ -30,13 +30,10 @@ export const getPreferences = (offset = 0) => {
     .then(parseData)
 }
 
-export const updatePreferences = (preferences, task) => {
+export const updatePreferences = (id, task) => {
   const taskBool = task === "ADD" ? true : false 
-  const newPreferences = {}
-
-  preferences.forEach(key => {
-    newPreferences[key] = taskBool
-  })
+  const newPreference = {}
+  newPreference[id] = taskBool
 
   return fetch(preferencesUrl, {
     method: "PATCH",
@@ -44,6 +41,6 @@ export const updatePreferences = (preferences, task) => {
       'Content-Type': 'application/json', 
       'Accepts': 'application/json'
     },
-    body: JSON.stringify(newPreferences)
+    body: JSON.stringify(newPreference)
   })
 } 

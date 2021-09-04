@@ -1,5 +1,19 @@
 const Checkbox = ({ checked }) => {
-  const addCheckStyle = () => checked ? 'checkmark check' : 'checkmark'
+  const addCheckStyle = () => {
+    switch (checked) {
+      case "CHECKED":
+        return 'checkmark check'
+
+      case "UNCHECKED":
+        return 'checkmark'
+
+      case "PENDING":
+        return 'checkmark pending'
+
+      default:
+        return 'checkmark'
+    }
+  }
 
   return (
     <div className="checkbox-container">
