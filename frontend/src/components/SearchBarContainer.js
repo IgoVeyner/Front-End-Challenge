@@ -7,6 +7,8 @@ import useSearch from '../hooks/useSearch'
 import debounce from 'lodash.debounce';
 import useDebounceCleanup from '../hooks/useDebounceCleanup'
 import { setLoading } from '../redux/actions/loadingActions'
+import { setSearchError } from '../redux/actions/searchErrorActions'
+import { handleError } from '../services/errors'
 
 const SearchBarContainer = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -17,14 +19,22 @@ const SearchBarContainer = ({ onSubmit }) => {
   const handleSubmit = useCallback(() => {
     const updateCities = (parsed) => dispatch(setCities(parsed, offset))
     const setBusy = () => dispatch(setLoading())
+    const setSearchErrorToTrue = () => dispatch(setSearchError())
 
     setBusy()
     getCities(searchTerm, offset)
     .then(parsed => {
-      updateCities(parsed)
+
+      // 500 error code comes back as false positive so we need to error handle here
+      parsed.statusCode === 500 ? 
+        handleError(parsed, setSearchErrorToTrue) 
+        : 
+        updateCities(parsed)
     })
     .catch(error => {
-      // TODO add searchError state to redux and enable it here on error
+      
+      // does not catch 500 error code
+      handleError(error, setSearchErrorToTrue)
     })
   }, [searchTerm, offset, dispatch])
 

@@ -7,6 +7,7 @@ const List = () => {
   const cities = useSelector(state => state.cities)
   const offset = useSelector(state => state.offset)
   const loading = useSelector(state => state.loading)
+  const searchError = useSelector(state => state.searchError)
 
   const dispatch = useDispatch()
   const nextPage = () => dispatch(updateOffset(10))
