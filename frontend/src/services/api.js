@@ -1,6 +1,6 @@
 const url = "http://localhost:3030/"
 const citiesUrl = url + 'cities'
-const preferencesUrl = url + '/preferences/cities'
+const preferencesUrl = url + 'preferences/cities'
 
 const parseData = (data) => data.json() 
 
