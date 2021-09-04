@@ -1,7 +1,16 @@
 const SearchError = () => {
+  const handleClick = () => {
+    // TODO: search again
+    return
+  }
+  
   return (
     <div>
-      Something went wrong.. Please Try again.
+      <div>
+        Something went wrong..
+      </div>
+
+      <button onClick={handleClick}>Try Again</button>
     </div>
   )
 }
