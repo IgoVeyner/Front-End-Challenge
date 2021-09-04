@@ -1,0 +1,33 @@
+.checkbox-container
+  display: grid
+  place-items: center
+  width: $space2XL
+  position: relative
+
+.input-checkbox
+  display: none
+
+.checkmark
+  position: absolute
+  top: 33%
+  left: 33%
+  height: $spaceM
+  width: $spaceM
+  border: solid 1px $main-border-color
+  border-radius: 2px
+
+.check
+  background-color: black
+
+  &::after
+    content: ''  
+    position: absolute
+    bottom: 4px
+    left: 5px
+    width: 3px
+    height: 8px
+    border: solid white
+    border-width: 0 3px 3px 0
+    -webkit-transform: rotate(45deg)
+    -ms-transform: rotate(45deg)
+    transform: rotate(45deg)
