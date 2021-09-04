@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { updateOffset } from "../redux/actions/offsetActions"
 import ListItem from "./ListItem"
 import Loading from './Loading'
+import SearchError from "./SearchError"
 
 const List = () => {
   const cities = useSelector(state => state.cities)
@@ -43,7 +44,8 @@ const List = () => {
           {loading ? (
             <Loading />
           ) : (
-            cities.data ? renderList() : null
+            searchError ? <SearchError /> : renderList()
+            // cities.data ? renderList() : null
           )}
         </div>
       </div>

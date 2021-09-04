@@ -4,6 +4,7 @@ const handleLoading = (state = false, action) => {
       return action.payload
 
     case "SET_CITIES":
+    case "SEARCH_ERROR":
       return false
 
     default:
