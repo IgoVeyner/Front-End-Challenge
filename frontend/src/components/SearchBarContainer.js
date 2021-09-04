@@ -3,12 +3,12 @@ import { getCities } from '../services/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCities } from '../redux/actions/citiesActions'
 import { resetOffset } from "../redux/actions/offsetActions"
-import useSearch from '../hooks/useSearch'
 import debounce from 'lodash.debounce';
 import useDebounceCleanup from '../hooks/useDebounceCleanup'
 import { setLoading } from '../redux/actions/searchLoadingActions'
 import { setSearchError } from '../redux/actions/searchErrorActions'
 import { handleError } from '../services/errors'
+import useFetchRequest from '../hooks/useFetchRequest'
 
 const SearchBarContainer = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -50,7 +50,7 @@ const SearchBarContainer = ({ onSubmit }) => {
   }, [dispatch])
   
   useDebounceCleanup(debouncedResults)
-  useSearch(handleSubmit)
+  useFetchRequest(handleSubmit)
   
   return (
     <div className="search-container">

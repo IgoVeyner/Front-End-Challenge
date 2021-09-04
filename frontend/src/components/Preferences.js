@@ -1,10 +1,10 @@
 import { useCallback } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import useGetPreferences from "../hooks/useGetPreferences"
 import { getPreferences } from "../services/api"
 import Loading from "./Loading"
 import { setLoading } from "../redux/actions/preferencesLoadingActions"
 import { setPreferences } from "../redux/actions/preferencesActions"
+import useFetchRequest from "../hooks/useFetchRequest"
 
 const Preferences = () => {
   const loading = useSelector(state => state.preferencesLoading)
@@ -27,7 +27,7 @@ const Preferences = () => {
       })
     }, [dispatch])
 
-  useGetPreferences(loadPreferences)
+  useFetchRequest(loadPreferences)
   
   return (
     <div>
