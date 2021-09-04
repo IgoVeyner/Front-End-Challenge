@@ -23,6 +23,9 @@ const SearchBarContainer = ({ onSubmit }) => {
     .then(parsed => {
       updateCities(parsed)
     })
+    .catch(error => {
+      // TODO add searchError state to redux and enable it here on error
+    })
   }, [searchTerm, offset, dispatch])
 
   const debouncedResults = useMemo(() => {
