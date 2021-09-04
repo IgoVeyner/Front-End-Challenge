@@ -4,6 +4,7 @@ import handlePreferencesLoading from "./preferencesLoadingReducer.js"
 import handleSearchLoading from "./searchLoadingReducer.js"
 import handleOffset from './offsetReducer.js'
 import handleSearchError from "./searchErrorReducer.js"
+import handlePreferences from "./preferencesReducer.js"
 
 const rootReducer = combineReducers({
   cities: handleCities,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   searchLoading: handleSearchLoading,
   searchError: handleSearchError,
   preferencesLoading: handlePreferencesLoading,
+  preferences: handlePreferences
 })
 
 export default rootReducer

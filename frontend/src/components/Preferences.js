@@ -6,6 +6,7 @@ import { setLoading } from "../redux/actions/preferencesLoadingActions"
 
 const Preferences = () => {
   const loading = useSelector(state => state.preferencesLoading)
+  const favorites = useSelector(state => state.preferences)
 
   const dispatch = useDispatch()
   const setPreferencesLoading = () => dispatch(setLoading())
