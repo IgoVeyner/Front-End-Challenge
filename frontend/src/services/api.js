@@ -1,5 +1,8 @@
 const url = "http://localhost:3030/"
 const citiesUrl = url + 'cities'
+const preferencesUrl = url + '/preferences/cities'
+
+const parseData = (data) => data.json() 
 
 export const getCities = (searchTerm = '', offset = 0) => {
   const queryPrefix = '?query',
@@ -14,5 +17,10 @@ export const getCities = (searchTerm = '', offset = 0) => {
   }
 
   return fetch(CreateCitiesUrlWithQuery())
-  .then(data => data.json())
+    .then(parseData)
+}
+
+export const getPreferences = () => {
+  return fetch(preferencesUrl)
+    .then(parseData)
 }
