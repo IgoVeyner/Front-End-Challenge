@@ -7,6 +7,9 @@ const Checkbox = ({ checked }) => {
         type="checkbox" 
         className="input-checkbox"
         checked={checked}
+        
+        // TODO: update with appropriate function
+        onChange={() => {}}
       />
       <span className={addCheckStyle()}></span>
     </div>
