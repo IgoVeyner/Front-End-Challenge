@@ -22,9 +22,6 @@ const SearchBarContainer = ({ onSubmit }) => {
     })
   }, [searchTerm, offset, dispatch])
 
-  // debounce search to limit API requests,
-  // sometimes API returns 500 error randomly? 
-  // Perhaps too many requests? - Still occurs but less often now.
   const debouncedResults = useMemo(() => {
     const resetOffsetIndex = () => dispatch(resetOffset())
 
