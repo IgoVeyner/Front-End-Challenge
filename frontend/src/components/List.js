@@ -18,6 +18,7 @@ const List = () => {
   const nextDisableCheck = () => offset + 10 >= cities.total ? true : false
 
   const renderList = () => {
+    if (!cities.data) return
     return cities.data.map(city => {
       return <ListItem city={city} key={city.geonameid}/>
     })
@@ -45,7 +46,6 @@ const List = () => {
             <Loading />
           ) : (
             searchError ? <SearchError /> : renderList()
-            // cities.data ? renderList() : null
           )}
         </div>
       </div>
