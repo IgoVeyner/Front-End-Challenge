@@ -1,16 +1,8 @@
 const Checkbox = ({ checked }) => {
   const addCheckStyle = () => checked ? 'checkmark check' : 'checkmark'
-  
+
   return (
     <div className="checkbox-container">
-      <input 
-        type="checkbox" 
-        className="input-checkbox"
-        checked={checked}
-        
-        // TODO: update with appropriate function
-        onChange={() => {}}
-      />
       <span className={addCheckStyle()}></span>
     </div>
   )
