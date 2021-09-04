@@ -10,13 +10,13 @@ export const getCities = (searchTerm = '', offset = 0) => {
     limit = '&limit=10',
     offsetPrefix = '&offset='
 
-  const CreateCitiesUrlWithQuery = () => {
+  const createCitiesUrlWithQuery = () => {
     return citiesUrl + queryPrefix + 
       filterPrefix + searchTerm + 
       limit + offsetPrefix + offset
   }
 
-  return fetch(CreateCitiesUrlWithQuery())
+  return fetch(createCitiesUrlWithQuery())
     .then(parseData)
 }
 

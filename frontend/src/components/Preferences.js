@@ -20,9 +20,7 @@ const Preferences = () => {
       getPreferences()
       .then(data => {
         console.log(data)
-
         setFavorites(data)
-        // TODO: save this return data into redux
       })
       .catch(error => {
         console.log(error)
@@ -35,7 +33,7 @@ const Preferences = () => {
     <div>
       <h2>Favorites</h2>
       <div>
-        {/* {loading ? <Loading /> : "done"} */}
+        {loading ? <Loading /> : "done"}
       </div>
     </div>
   )
