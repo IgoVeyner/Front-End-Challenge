@@ -2,25 +2,30 @@ const url = "http://localhost:3030/"
 const citiesUrl = url + 'cities'
 const preferencesUrl = url + 'preferences/cities'
 
+const queryPrefix = '?query'
+const filterPrefix = '&filter='
+const limit = '&limit=10'
+const offsetPrefix = '&offset='
+
 const parseData = (data) => data.json() 
 
 export const getCities = (searchTerm = '', offset = 0) => {
-  const queryPrefix = '?query',
-    filterPrefix = '&filter=',
-    limit = '&limit=10',
-    offsetPrefix = '&offset='
-
-  const createCitiesUrlWithQuery = () => {
+  const createFullCitiesUrl = () => {
     return citiesUrl + queryPrefix + 
       filterPrefix + searchTerm + 
       limit + offsetPrefix + offset
   }
 
-  return fetch(createCitiesUrlWithQuery())
+  return fetch(createFullCitiesUrl())
     .then(parseData)
 }
 
-export const getPreferences = () => {
-  return fetch(preferencesUrl)
+export const getPreferences = (offset = 0) => {
+  const createFullPreferencesUrl = () => {
+    return preferencesUrl + queryPrefix +
+      limit + offsetPrefix + offset
+  }
+
+  return fetch(createFullPreferencesUrl())
     .then(parseData)
 }
