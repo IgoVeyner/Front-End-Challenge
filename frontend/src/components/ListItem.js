@@ -2,11 +2,11 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 import Checkbox from "./Checkbox"
 import { updatePreferences } from '../services/api'
 import { handleCheckboxError } from '../services/errors'
+import useFavoritesPatchRequest from '../hooks/useFavoritesPatchRequest'
 
 const ListItem = ({ city }) => {
   const [checked, setChecked] = useState("UNCHECKED")
   const previousState = useRef(checked)
-  const mounted = useRef(false)
 
   const handleClick = () => setChecked("PENDING")
 
@@ -50,16 +50,7 @@ const ListItem = ({ city }) => {
     }, [city.geonameid]
   )
 
-  // TODO: move to custom hook
-  useEffect(() => {
-    if (mounted.current) {
-      if (checked === "PENDING") {
-        previousState.current === "UNCHECKED" ? onCheck() : onUncheck()
-      }
-    } else {
-      mounted.current = true
-    }
-  }, [checked, onCheck, onUncheck])
+  useFavoritesPatchRequest(checked, onCheck, onUncheck, previousState)
 
   return (
     <div className="list-item" onClick={handleClick}>
