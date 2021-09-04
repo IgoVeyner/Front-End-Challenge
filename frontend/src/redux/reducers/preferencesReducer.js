@@ -1,4 +1,4 @@
-const handlePreferences = (state = [], action) => {
+const handlePreferences = (state = {}, action) => {
   switch(action.type) {
     case "SET_PREFERENCES":
       return action.payload
