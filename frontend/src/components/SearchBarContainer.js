@@ -6,6 +6,7 @@ import { resetOffset } from "../redux/actions/offsetActions"
 import useSearch from '../hooks/useSearch'
 import debounce from 'lodash.debounce';
 import useDebounceCleanup from '../hooks/useDebounceCleanup'
+import { setLoading } from '../redux/actions/loadingActions'
 
 const SearchBarContainer = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('')
@@ -15,7 +16,9 @@ const SearchBarContainer = ({ onSubmit }) => {
 
   const handleSubmit = useCallback(() => {
     const updateCities = (parsed) => dispatch(setCities(parsed, offset))
+    const setBusy = () => dispatch(setLoading())
 
+    setBusy()
     getCities(searchTerm, offset)
     .then(parsed => {
       updateCities(parsed)

@@ -1,10 +1,12 @@
 import { useSelector, useDispatch } from "react-redux"
 import { updateOffset } from "../redux/actions/offsetActions"
 import ListItem from "./ListItem"
+import Loading from './Loading'
 
 const List = () => {
   const cities = useSelector(state => state.cities)
   const offset = useSelector(state => state.offset)
+  const loading = useSelector(state => state.loading)
 
   const dispatch = useDispatch()
   const nextPage = () => dispatch(updateOffset(10))
@@ -37,7 +39,11 @@ const List = () => {
         </div>
 
         <div>
-          {cities.data ? renderList() : null}
+          {loading ? (
+            <Loading />
+          ) : (
+            cities.data ? renderList() : null
+          )}
         </div>
       </div>
     </div>
