@@ -42,7 +42,7 @@ function App() {
         setError(true)
       })
     },
-    [],
+    [dispatch],
   )
 
   const renderComponents = () => {
