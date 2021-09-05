@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setLoading } from "../redux/actions/preferencesLoadingActions"
 import { setPreferences } from "../redux/actions/preferencesActions"
 import { getPreferences } from "../services/api"
-import { handleError } from '../services/errors'
+import { handleFavoitesContainerError } from '../services/errors'
 import { finishLoading } from '../redux/actions/preferencesLoadingActions'
 import useFetchRequest from "../hooks/useFetchRequest"
 import FavoritesList from './FavoritesList'
@@ -44,7 +44,7 @@ const FavoritesListContainer = ({ onPress }) => {
       .then(resp => {
         // 500 error code comes back as false positive so we need to error handle here
         if (resp.statusCode === 500) {
-          handleError(resp)
+          handleFavoitesContainerError(resp)
           setFinishLoading()
           setError(true)
         } else {
@@ -53,7 +53,7 @@ const FavoritesListContainer = ({ onPress }) => {
       })
       .catch(error => {
         // does not catch 500 error code
-        handleError(error)
+        handleFavoitesContainerError(error)
       })
     }, [dispatch])
 
