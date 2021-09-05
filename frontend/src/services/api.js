@@ -30,6 +30,11 @@ export const getPreferences = (offset = 0) => {
     .then(parseData)
 }
 
+export const getCity = (id) => {
+  return fetch(citiesUrl + `/${id}`)
+    .then(parseData)
+}
+
 export const updatePreferences = (id, task) => {
   const taskBool = task === "ADD" ? true : false 
   const newPreference = {}
