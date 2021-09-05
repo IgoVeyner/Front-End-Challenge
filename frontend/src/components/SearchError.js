@@ -4,7 +4,6 @@ import { setCities } from '../redux/actions/citiesActions'
 import { getCities } from '../services/api'
 import { handleError } from '../services/errors'
 import { setSearchError } from '../redux/actions/searchErrorActions'
-import useSearch from '../hooks/useSearch'
 
 const SearchError = () => {
   const dispatch = useDispatch()
