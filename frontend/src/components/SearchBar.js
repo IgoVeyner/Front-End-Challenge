@@ -10,6 +10,7 @@ import { setSearchError } from '../redux/actions/searchErrorActions'
 import { handleError } from '../services/errors'
 import useFetchRequest from '../hooks/useFetchRequest'
 import { updateSearchTerm } from '../redux/actions/searchTermActions'
+import FilterIcon from './FilterIcon'
 
 const SearchBar = ({ onSubmit }) => {
   const searchTerm = useSelector(state => state.searchTerm)
@@ -57,6 +58,7 @@ const SearchBar = ({ onSubmit }) => {
   
   return (
     <div className="search-container">
+      <FilterIcon />
       <input 
         className="searchbar"
         type="text" 
