@@ -10,6 +10,7 @@ import useFetchRequest from './hooks/useFetchRequest';
 import AppLoading from './components/AppLoading';
 import { setPreferences } from './redux/actions/preferencesActions';
 import { handleFavoitesContainerError } from './services/errors';
+import AppError from './components/AppError';
 
 function App() {
   const [favoritesListId, setFavoritesListId] = useState(1)
@@ -26,6 +27,7 @@ function App() {
     () => {
       const setFullPreferences = (data) => dispatch(setPreferences(data))
 
+      setError(false)
       getFullPreferences()
       .then(resp => {
         // 500 status codes come back as false positive
@@ -47,7 +49,7 @@ function App() {
   )
 
   const renderComponents = () => {
-    if (error) return <div>Please try again!</div>
+    if (error) return <AppError onPress={getAllPreferences} />
     if (busy) return <AppLoading />
     return (
       <>
