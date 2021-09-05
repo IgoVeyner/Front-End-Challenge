@@ -42,6 +42,7 @@ const FavoritesListContainer = ({ onPress }) => {
     setPreferencesLoading()
       getPreferences()
       .then(resp => {
+        // 500 error code comes back as false positive so we need to error handle here
         if (resp.statusCode === 500) {
           handleError(resp)
           setFinishLoading()
@@ -51,6 +52,7 @@ const FavoritesListContainer = ({ onPress }) => {
         }
       })
       .catch(error => {
+        // does not catch 500 error code
         handleError(error)
       })
     }, [dispatch])
