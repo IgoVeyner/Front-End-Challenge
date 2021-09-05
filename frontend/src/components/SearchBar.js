@@ -11,6 +11,7 @@ import { handleError } from '../services/errors'
 import useFetchRequest from '../hooks/useFetchRequest'
 import { updateSearchTerm } from '../redux/actions/searchTermActions'
 import FilterIcon from './FilterIcon'
+import ClearIcon from './ClearIcon'
 
 const SearchBar = ({ onSubmit }) => {
   const searchTerm = useSelector(state => state.searchTerm)
@@ -65,6 +66,7 @@ const SearchBar = ({ onSubmit }) => {
         onChange={debouncedResults} 
         placeholder="Type to filter by city name or country"
       />
+      <ClearIcon hidden={searchTerm === ""}/>
     </div>
   )
 }
