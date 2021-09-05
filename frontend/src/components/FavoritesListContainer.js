@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setLoading } from "../redux/actions/preferencesLoadingActions"
 import { setPreferences } from "../redux/actions/preferencesActions"
 import { getPreferences } from "../services/api"
+import { handleError } from '../services/errors'
+import { finishLoading } from '../redux/actions/preferencesLoadingActions'
 import useFetchRequest from "../hooks/useFetchRequest"
 import FavoritesList from './FavoritesList'
 import Loading from './Loading'
@@ -13,7 +15,6 @@ const FavoritesListContainer = ({ onPress }) => {
 
   const favorites = useSelector(state => state.preferences)
   const loading = useSelector(state => state.preferencesLoading)
-  // TODO: Error handling selector
 
   const dispatch = useDispatch()
   
@@ -36,21 +37,21 @@ const FavoritesListContainer = ({ onPress }) => {
   const loadPreferences = useCallback(() => {
     const setPreferencesLoading = () => dispatch(setLoading())
     const setFavorites = (data) => dispatch(setPreferences(data))
+    const setFinishLoading = () => dispatch(finishLoading())
     
     setPreferencesLoading()
       getPreferences()
-      .then(data => {
-        // TODO: error handling here
-        if (data.statusCode === 500) {
-          console.log("error!")
+      .then(resp => {
+        if (resp.statusCode === 500) {
+          handleError(resp)
+          setFinishLoading()
           setError(true)
+        } else {
+          setFavorites(resp)
         }
-        console.log(data)
-        setFavorites(data)
       })
       .catch(error => {
-        // TODO: error handling here even though 500 error code wont be caught here
-        console.log(error)
+        handleError(error)
       })
     }, [dispatch])
 
