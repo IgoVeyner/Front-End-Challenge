@@ -9,7 +9,7 @@ import FavoritesError from './FavoritesError'
 const FavoritesListContainer = ({ onPress }) => {
   const [error, setError] = useState(false)
   const [favorites, setFavorites] = useState([])
-  const [busy, setBusy] = useState(false)
+  const [busy, setBusy] = useState(true)
 
   const prevPage = () => {
     // TODO
@@ -36,6 +36,7 @@ const FavoritesListContainer = ({ onPress }) => {
         setBusy(false)
         setError(true)
       } else {
+        setBusy(false)
         setFavorites(resp)
       }
     })
