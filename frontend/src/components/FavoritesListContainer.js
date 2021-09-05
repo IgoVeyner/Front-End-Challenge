@@ -55,6 +55,7 @@ const FavoritesListContainer = ({ onPress }) => {
   )
 
   if (needsReload) {
+    setBusy(true)
     loadPreferences()
     finishPreferencesReload()
   }
