@@ -3,8 +3,8 @@ const handlePreferencesReload = (state = false, action) => {
     case "START_RELOAD":
       return true
 
-    case "SET_PREFERENCES":
-      return false
+    case "END_RELOAD":
+      return false 
 
     default: 
       return state

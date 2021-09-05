@@ -1,11 +1,12 @@
 import { useCallback, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { getPreferences } from "../services/api"
 import { handleFavoitesContainerError } from '../services/errors'
 import useFetchRequest from "../hooks/useFetchRequest"
 import FavoritesList from './FavoritesList'
 import Loading from './Loading'
 import FavoritesError from './FavoritesError'
+import { endPreferenceReload } from '../redux/actions/preferencesReloadActions'
 
 const FavoritesListContainer = ({ onPress }) => {
   const [error, setError] = useState(false)
@@ -13,6 +14,9 @@ const FavoritesListContainer = ({ onPress }) => {
   const [busy, setBusy] = useState(true)
 
   const needsReload = useSelector(state => state.preferencesReload)
+
+  const dispatch = useDispatch()
+  const finishPreferencesReload = () => dispatch(endPreferenceReload())
 
   const prevPage = () => {
     // TODO
@@ -47,12 +51,17 @@ const FavoritesListContainer = ({ onPress }) => {
       // does not catch 500 error code
       handleFavoitesContainerError(error)
     })
-    }, [])
+    }, []
+  )
+
+  if (needsReload) {
+    loadPreferences()
+    finishPreferencesReload()
+  }
 
   useFetchRequest(loadPreferences)
 
   const renderInnerComponent = () => {
-    if (needsReload) return <div>Please Reload</div>
     if (busy) return <Loading />
     if (error) return <FavoritesError onPress={onPress}/>
     return <FavoritesList favorites={favorites} />

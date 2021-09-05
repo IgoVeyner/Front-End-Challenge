@@ -4,3 +4,10 @@ export const startPreferenceReload = () => {
     payload: true
   }
 }
+
+export const endPreferenceReload = () => {
+  return {
+    type: "END_RELOAD",
+    payload: false
+  }
+}
