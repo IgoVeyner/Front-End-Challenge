@@ -1,18 +1,24 @@
 import { useState, useCallback, useRef } from 'react'
+import { useDispatch } from 'react-redux'
 import Checkbox from "./Checkbox"
 import CitiesListItemText from './CitiesListItemText'
 import { updatePreferences } from '../services/api'
 import { handleCheckboxError } from '../services/errors'
 import useFavoritesPatchRequest from '../hooks/useFavoritesPatchRequest'
+import { startPreferenceReload } from '../redux/actions/preferencesReloadActions'
 
 const CitiesListItem = ({ city, initalState }) => {
   const [checked, setChecked] = useState(initalState)
   const previousState = useRef(checked)
 
+  const dispatch = useDispatch()
+
   const handleClick = () => setChecked("PENDING")
 
   // TODO fetch new preferences on completion
   const onCheck = useCallback(() => {
+    const setNeedsReload = () => dispatch(startPreferenceReload())
+
     updatePreferences(city.geonameid, "ADD")
     .then(resp => {
       // 500 error comes back as false positive
@@ -22,17 +28,20 @@ const CitiesListItem = ({ city, initalState }) => {
       } else {
         previousState.current = "CHECKED"
         setChecked("CHECKED")
+        setNeedsReload()
       }
     })
     .catch(error => {
       // Does not catch 500 error
       handleCheckboxError(error, "ADD")
     })
-    }, [city.geonameid]
+    }, [city.geonameid, dispatch]
   )
   
   // TODO fetch new preferences on completion
   const onUncheck = useCallback(() => {
+    const setNeedsReload = () => dispatch(startPreferenceReload())
+
     updatePreferences(city.geonameid, "REMOVE")
     .then(resp => {
       // 500 error comes back as false positive
@@ -42,13 +51,14 @@ const CitiesListItem = ({ city, initalState }) => {
       } else {
         previousState.current = "UNCHECKED"
         setChecked("UNCHECKED")
+        setNeedsReload()
       }
     })
     .catch(error => {
       // Does not catch 500 error
       handleCheckboxError(error, "Remove")
     })
-    }, [city.geonameid]
+    }, [city.geonameid, dispatch]
   )
 
   useFavoritesPatchRequest(checked, onCheck, onUncheck, previousState)

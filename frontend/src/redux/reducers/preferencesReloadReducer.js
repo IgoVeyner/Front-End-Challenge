@@ -1,7 +1,7 @@
 const handlePreferencesReload = (state = false, action) => {
   switch (action.type) {
     case "START_RELOAD":
-      return action.payload
+      return true
 
     case "SET_PREFERENCES":
       return false

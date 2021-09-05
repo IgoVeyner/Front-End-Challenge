@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   searchError: handleSearchError,
   preferences: handlePreferences,
   searchTerm: handleSearchTerm,
-  preferenceReload: handlePreferencesReload,
+  preferencesReload: handlePreferencesReload,
 })
 
 export default rootReducer
