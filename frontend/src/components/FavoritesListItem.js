@@ -2,6 +2,7 @@ import { useState, useCallback } from "react"
 import useGetCityData from "../hooks/useGetCityData"
 import { getCity } from "../services/api"
 import { handleFavoritesItemError } from "../services/errors"
+import FavoritesListItemError from "./FavoritesListItemError"
 import FavoritesListItemLoading from "./FavoritesListItemLoading"
 
 const FavoritesListItem = ({ id }) => {
@@ -31,8 +32,7 @@ const FavoritesListItem = ({ id }) => {
 
   const renderListItemComponent = () => {
     if (error) {
-      // TODO error component here
-      return <div className="favorites-list-item">Error...</div>
+      return <FavoritesListItemError onPress={getCityData} />
     }
     if (cityData.country) {
       // TODO render normal component here 
