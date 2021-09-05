@@ -1,10 +1,10 @@
 import { useSelector, useDispatch } from "react-redux"
 import { updateOffset } from "../redux/actions/offsetActions"
-import ListItem from "./ListItem"
+import CitiesList from "./CitiesList"
 import Loading from './Loading'
 import SearchError from "./SearchError"
 
-const List = () => {
+const CitiesListContainer = () => {
   const cities = useSelector(state => state.cities)
   const offset = useSelector(state => state.offset)
   const loading = useSelector(state => state.searchLoading)
@@ -17,18 +17,14 @@ const List = () => {
   const prevDisableCheck = () => offset === 0 ? true : false 
   const nextDisableCheck = () => offset + 10 >= cities.total ? true : false
 
-  const renderList = () => {
-    if (!cities.data) return
-
-    return cities.data.map(city => {
-      return <ListItem 
-        city={city} 
-        key={city.geonameid} 
-      />
-    })
+  const renderInnerComponent = () => {
+    if (loading) return <Loading />
+    if (searchError) return <SearchError />
+    return <CitiesList cities={cities} />
   }
 
   return (
+    // TODO: Abstract this into new component
     <div className="list-container">
       <div>
         <button 
@@ -45,21 +41,11 @@ const List = () => {
       </div>
       
       <div className="list-inner-container">
-
-        <div>
-          {loading ? (
-            <Loading />
-          ) : (
-            searchError ? <SearchError /> : renderList()
-          )}
-        </div>
+        {renderInnerComponent()}
       </div>
 
-      {/* <div> */}
-        {/* <button onClick={handleSubmit}>Submit</button> */}
-      {/* </div> */}
     </div>
   )
 }
 
-export default List
+export default CitiesListContainer
