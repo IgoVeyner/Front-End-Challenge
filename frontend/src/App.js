@@ -28,7 +28,7 @@ function App() {
 
       getFullPreferences()
       .then(resp => {
-        // TODO: error handling for 500 error codes
+        // 500 status codes come back as false positive
         if (resp.statusCode === 500) {
           handleFavoitesContainerError(resp)
           setError(true)
@@ -38,6 +38,7 @@ function App() {
         }
       })
       .catch(error => {
+        // does not catch 500 error
         handleFavoitesContainerError(error)
         setError(true)
       })
