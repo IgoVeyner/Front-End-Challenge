@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import Checkbox from "./Checkbox"
+import ListItemText from './ListItemText'
 import { updatePreferences } from '../services/api'
 import { handleCheckboxError } from '../services/errors'
 import useFavoritesPatchRequest from '../hooks/useFavoritesPatchRequest'
@@ -54,17 +55,8 @@ const ListItem = ({ city }) => {
 
   return (
     <div className="list-item" onClick={handleClick}>
-      <Checkbox 
-        checked={checked} 
-      />
-   
-      <div className="city-text-container">
-        <h1 className="city-name">{city.name}</h1>
-
-        <div className="city-text">
-          {city.subcountry} - {city.country}
-        </div>
-      </div>
+      <Checkbox checked={checked} />
+      <ListItemText data={city} />
     </div>
   )
 }
