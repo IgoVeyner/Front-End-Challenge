@@ -19,7 +19,7 @@ const FavoritesListItem = ({ id }) => {
     }, [id]
   )
 
-  useFetchRequest(getCityData)
+  // useFetchRequest(getCityData)
 
   return (
     <div>

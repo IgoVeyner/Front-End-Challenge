@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { setLoading } from "../redux/actions/preferencesLoadingActions"
 import { setPreferences } from "../redux/actions/preferencesActions"
@@ -6,8 +6,11 @@ import { getPreferences } from "../services/api"
 import useFetchRequest from "../hooks/useFetchRequest"
 import FavoritesList from './FavoritesList'
 import Loading from './Loading'
+import FavoritesError from './FavoritesError'
 
-const FavoritesListContainer = () => {
+const FavoritesListContainer = ({ onPress }) => {
+  const [error, setError] = useState(false)
+
   const favorites = useSelector(state => state.preferences)
   const loading = useSelector(state => state.preferencesLoading)
   // TODO: Error handling selector
@@ -38,6 +41,10 @@ const FavoritesListContainer = () => {
       getPreferences()
       .then(data => {
         // TODO: error handling here
+        if (data.statusCode === 500) {
+          console.log("error!")
+          setError(true)
+        }
         console.log(data)
         setFavorites(data)
       })
@@ -51,7 +58,7 @@ const FavoritesListContainer = () => {
 
   const renderInnerComponent = () => {
     if (loading) return <Loading />
-    // TODO: error component and check for error
+    if (error) return <FavoritesError onPress={onPress}/>
     return <FavoritesList favorites={favorites} />
   }
   
