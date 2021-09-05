@@ -17,6 +17,7 @@ const SearchBar = ({ onSubmit }) => {
 
   const dispatch = useDispatch()
 
+  // TODO: abstract & refactor with Redux-Thunk
   const handleSubmit = useCallback(() => {
     const updateCities = (parsed) => dispatch(setCities(parsed, offset))
     const setBusy = () => dispatch(setLoading())
