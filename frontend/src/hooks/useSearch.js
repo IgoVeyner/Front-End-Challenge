@@ -4,17 +4,18 @@ import { handleError } from '../services/errors'
 import { getCities } from '../services/api'
 import { setCities } from '../redux/actions/citiesActions'
 import { setSearchError } from '../redux/actions/searchErrorActions'
-import { setLoading } from "../redux/actions/preferencesLoadingActions"
+import { setLoading } from "../redux/actions/searchLoadingActions"
 
 const useSearch = () => {
   const offset = useSelector(state => state.offset)
   const searchTerm = useSelector(state => state.searchTerm)
+  
   const dispatch = useDispatch()
-
+  
   // TODO: abstract & refactor with Redux-Thunk
   const handleSubmit = useCallback(() => {
-    const updateCities = (parsed) => dispatch(setCities(parsed, offset))
     const setBusy = () => dispatch(setLoading())
+    const updateCities = (parsed) => dispatch(setCities(parsed, offset))
     const setSearchErrorToTrue = () => dispatch(setSearchError())
 
     setBusy()
@@ -39,6 +40,5 @@ const useSearch = () => {
     handleSubmit()
   }, [handleSubmit])
 }
-
 
 export default useSearch
