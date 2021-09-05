@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { getCities } from '../services/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCities } from '../redux/actions/citiesActions'
@@ -9,9 +9,10 @@ import { setLoading } from '../redux/actions/searchLoadingActions'
 import { setSearchError } from '../redux/actions/searchErrorActions'
 import { handleError } from '../services/errors'
 import useFetchRequest from '../hooks/useFetchRequest'
+import { updateSearchTerm } from '../redux/actions/searchTermActions'
 
 const SearchBar = ({ onSubmit }) => {
-  const [searchTerm, setSearchTerm] = useState('')
+  const searchTerm = useSelector(state => state.searchTerm)
   const offset = useSelector(state => state.offset)
 
   const dispatch = useDispatch()
@@ -40,9 +41,10 @@ const SearchBar = ({ onSubmit }) => {
 
   const debouncedResults = useMemo(() => {
     const resetOffsetIndex = () => dispatch(resetOffset())
+    const setNewSearchTerm = (query) => dispatch(updateSearchTerm(query))
 
     const handleChange = (e) => {
-      setSearchTerm(e.target.value)
+      setNewSearchTerm(e.target.value)
       resetOffsetIndex()
     }
 
