@@ -1,6 +1,6 @@
 const FavoritesListItemLoading = () => {
   return (
-    <div>
+    <div className="favorites-list-item">
       ... loading city data ...
     </div>
   )

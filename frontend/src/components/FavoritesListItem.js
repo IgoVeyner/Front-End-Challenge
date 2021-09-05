@@ -32,11 +32,11 @@ const FavoritesListItem = ({ id }) => {
   const renderListItemComponent = () => {
     if (error) {
       // TODO error component here
-      return <div>Error...</div>
+      return <div className="favorites-list-item">Error...</div>
     }
     if (cityData.country) {
       // TODO render normal component here 
-      return <div>Place city data here</div>
+      return <div className="favorites-list-item">Place city data here</div>
     }
     return <FavoritesListItemLoading />
   }
