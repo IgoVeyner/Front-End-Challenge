@@ -30,6 +30,11 @@ export const getPreferences = (offset = 0) => {
     .then(parseData)
 }
 
+export const getFullPreferences = () => {
+  return fetch(preferencesUrl)
+    .then(parseData)
+}
+
 export const getCity = (id) => {
   return fetch(citiesUrl + `/${id}`)
     .then(parseData)
