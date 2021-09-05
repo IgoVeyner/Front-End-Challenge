@@ -1,21 +1,20 @@
-import { useSelector, useDispatch } from 'react-redux'
-import { setLoading } from '../redux/actions/searchLoadingActions'
-import { setCities } from '../redux/actions/citiesActions'
-import { getCities } from '../services/api'
+import { useCallback, useEffect } from "react"
+import { useSelector, useDispatch } from "react-redux"
 import { handleError } from '../services/errors'
+import { getCities } from '../services/api'
+import { setCities } from '../redux/actions/citiesActions'
 import { setSearchError } from '../redux/actions/searchErrorActions'
-import useSearch from '../hooks/useSearch'
+import { setLoading } from "../redux/actions/preferencesLoadingActions"
 
-const SearchError = () => {
-  const dispatch = useDispatch()
-  
-  const searchTerm = useSelector(state => state.searchTerm)
+const useSearch = () => {
   const offset = useSelector(state => state.offset)
+  const searchTerm = useSelector(state => state.searchTerm)
+  const dispatch = useDispatch()
 
   // TODO: abstract & refactor with Redux-Thunk
-  const handleClick = () => {
-    const setBusy = () => dispatch(setLoading())
+  const handleSubmit = useCallback(() => {
     const updateCities = (parsed) => dispatch(setCities(parsed, offset))
+    const setBusy = () => dispatch(setLoading())
     const setSearchErrorToTrue = () => dispatch(setSearchError())
 
     setBusy()
@@ -33,17 +32,13 @@ const SearchError = () => {
       // does not catch 500 error code
       handleError(error, setSearchErrorToTrue)
     })
-  }
-  
-  return (
-    <div>
-      <div>
-        Something went wrong..
-      </div>
 
-      <button onClick={handleClick}>Try Again</button>
-    </div>
-  )
+  }, [searchTerm, offset, dispatch])
+
+  useEffect(() => {
+    handleSubmit()
+  }, [handleSubmit])
 }
 
-export default SearchError
+
+export default useSearch
