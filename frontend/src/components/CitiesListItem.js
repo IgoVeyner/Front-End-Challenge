@@ -32,7 +32,7 @@ const CitiesListItem = ({ city, initalState }) => {
         previousState.current = "CHECKED"
         setChecked("CHECKED")
         setNeedsReload()
-        updateFavorites(favorites.filter(id => id !== city.geonameid))
+        updateFavorites([...favorites, city.geonameid])
       }
     })
     .catch(error => {
