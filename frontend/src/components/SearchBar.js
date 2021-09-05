@@ -10,7 +10,7 @@ import { setSearchError } from '../redux/actions/searchErrorActions'
 import { handleError } from '../services/errors'
 import useFetchRequest from '../hooks/useFetchRequest'
 
-const SearchBarContainer = ({ onSubmit }) => {
+const SearchBar = ({ onSubmit }) => {
   const [searchTerm, setSearchTerm] = useState('')
   const offset = useSelector(state => state.offset)
 
@@ -64,4 +64,4 @@ const SearchBarContainer = ({ onSubmit }) => {
   )
 }
 
-export default SearchBarContainer
+export default SearchBar

@@ -1,6 +1,6 @@
 import './sass/app.sass';
 import Header from './components/Header'
-import SearchBarContainer from './components/SearchBarContainer';
+import SearchBar from './components/SearchBar';
 import List from './components/List';
 import Preferences from './components/Preferences';
 
@@ -8,7 +8,7 @@ function App() {
   return (
     <div className="App">
       <Header />
-      <SearchBarContainer />
+      <SearchBar />
       <List />
       <Preferences />
     </div>
