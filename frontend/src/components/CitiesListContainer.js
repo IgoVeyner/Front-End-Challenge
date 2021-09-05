@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux"
 import { updateOffset } from "../redux/actions/offsetActions"
 import CitiesList from "./CitiesList"
 import Loading from './Loading'
+import Pagination from "./Pagination"
 import SearchError from "./SearchError"
 
 const CitiesListContainer = () => {
@@ -17,6 +18,8 @@ const CitiesListContainer = () => {
   const prevDisableCheck = () => offset === 0 ? true : false 
   const nextDisableCheck = () => offset + 10 >= cities.total ? true : false
 
+  const disabledStatus = [prevDisableCheck(), nextDisableCheck()]
+
   const renderInnerComponent = () => {
     if (loading) return <Loading />
     if (searchError) return <SearchError />
@@ -24,21 +27,12 @@ const CitiesListContainer = () => {
   }
 
   return (
-    // TODO: Abstract this into new component
-    <div className="list-container">
-      <div>
-        <button 
-          onClick={prevPage} 
-          disabled={prevDisableCheck()} >
-          Prev
-        </button>
-
-        <button 
-          onClick={nextPage} 
-          disabled={nextDisableCheck()} >
-          Next
-        </button>
-      </div>
+    <div className="list-container"> 
+      <Pagination 
+        onNextClick={nextPage}
+        onPrevClick={prevPage}
+        disabledStatus={disabledStatus}
+      />
       
       <div className="list-inner-container">
         {renderInnerComponent()}
