@@ -1,8 +1,8 @@
 import './sass/app.sass';
 import Header from './components/Header'
 import SearchBar from './components/SearchBar';
-import Preferences from './components/Preferences';
 import CitiesListContainer from './components/CitiesListContainer';
+import FavoritesListContainer from './components/FavoritesListContainer';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
       <Header />
       <SearchBar />
       <CitiesListContainer />
-      <Preferences />
+      <FavoritesListContainer />
     </div>
   );
 }
