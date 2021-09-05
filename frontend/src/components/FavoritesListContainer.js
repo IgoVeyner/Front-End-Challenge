@@ -37,10 +37,12 @@ const FavoritesListContainer = () => {
     setPreferencesLoading()
       getPreferences()
       .then(data => {
+        // TODO: error handling here
         console.log(data)
         setFavorites(data)
       })
       .catch(error => {
+        // TODO: error handling here even though 500 error code wont be caught here
         console.log(error)
       })
     }, [dispatch])
