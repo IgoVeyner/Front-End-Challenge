@@ -1,4 +1,4 @@
-const ListItemText = ({ data }) => {
+const CitiesListItemText = ({ data }) => {
   return (
     <div className="city-text-container">
       <h1 className="city-name">{data.name}</h1>
@@ -10,4 +10,4 @@ const ListItemText = ({ data }) => {
   )
 }
 
-export default ListItemText
+export default CitiesListItemText

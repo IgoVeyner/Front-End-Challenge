@@ -1,11 +1,11 @@
 import { useState, useCallback, useRef } from 'react'
 import Checkbox from "./Checkbox"
-import ListItemText from './ListItemText'
+import CitiesListItemText from './CitiesListItemText'
 import { updatePreferences } from '../services/api'
 import { handleCheckboxError } from '../services/errors'
 import useFavoritesPatchRequest from '../hooks/useFavoritesPatchRequest'
 
-const ListItem = ({ city }) => {
+const CitiesListItem = ({ city }) => {
   const [checked, setChecked] = useState("UNCHECKED")
   const previousState = useRef(checked)
 
@@ -56,9 +56,9 @@ const ListItem = ({ city }) => {
   return (
     <div className="list-item" onClick={handleClick}>
       <Checkbox checked={checked} />
-      <ListItemText data={city} />
+      <CitiesListItemText data={city} />
     </div>
   )
 }
 
-export default ListItem
+export default CitiesListItem

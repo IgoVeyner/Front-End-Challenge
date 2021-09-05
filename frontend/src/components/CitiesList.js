@@ -1,11 +1,11 @@
-import ListItem from "./ListItem"
+import CitiesListItem from "./CitiesListItem"
 
 const CitiesList = ({ cities }) => {
   const renderList = () => {
     if (!cities.data) return
 
     return cities.data.map(city => {
-      return <ListItem 
+      return <CitiesListItem 
         city={city} 
         key={city.geonameid} 
       />
