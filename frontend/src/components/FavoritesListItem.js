@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react"
-import useFetchRequest from "../hooks/useFetchRequest"
+import useGetCityData from "../hooks/useGetCityData"
 import { getCity } from "../services/api"
-import { handleError } from "../services/errors"
+import { handleFavoritesItemError } from "../services/errors"
 import FavoritesListItemLoading from "./FavoritesListItemLoading"
 
 const FavoritesListItem = ({ id }) => {
@@ -16,7 +16,7 @@ const FavoritesListItem = ({ id }) => {
         // 500 error code come back as false positive 
         if (resp.statusCode === 500) {
           setError(true)
-          handleError(resp)
+          handleFavoritesItemError(resp, id)
         } else {
           if (error === true) setError(false)
           setCityData(resp)
@@ -24,7 +24,7 @@ const FavoritesListItem = ({ id }) => {
       })
       .catch(error => {
         // 500 error code wont be caught here
-        handleError(error)
+        handleFavoritesItemError(error, id)
       })
     }, [id, error]
   )
@@ -41,7 +41,7 @@ const FavoritesListItem = ({ id }) => {
     return <FavoritesListItemLoading />
   }
 
-  useFetchRequest(getCityData)
+  useGetCityData(getCityData, error)
 
   return (
     <>
