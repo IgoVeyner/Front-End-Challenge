@@ -8,7 +8,7 @@ const CitiesList = ({ cities }) => {
     if (!cities.data) return
 
     return cities.data.map(city => {
-      const initialState = favorites.data.includes(city.geonameid) ? "CHECKED" : "UNCHECKED"
+      const initialState = favorites.includes(city.geonameid) ? "CHECKED" : "UNCHECKED"
 
       return <CitiesListItem 
         city={city} 

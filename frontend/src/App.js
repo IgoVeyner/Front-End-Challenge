@@ -36,7 +36,7 @@ function App() {
           setError(true)
         } else {
           setBusy(false)
-          setFullPreferences(resp)
+          setFullPreferences(resp.data)
         }
       })
       .catch(error => {
