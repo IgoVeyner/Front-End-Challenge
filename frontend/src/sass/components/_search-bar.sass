@@ -1,9 +1,17 @@
 .search-container 
   margin-top: $spaceXL
   margin-bottom: $spaceS
+  border: solid 1px $main-border-color
+  width: 500px
+  display: flex
+  
 
 .searchbar
+  border: none
   width: 500px
   padding: $spaceS
   line-height: 1.4
   box-sizing: border-box
+
+  &:focus-within
+    outline: none
