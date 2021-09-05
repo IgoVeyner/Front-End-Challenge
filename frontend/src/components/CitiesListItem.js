@@ -5,8 +5,8 @@ import { updatePreferences } from '../services/api'
 import { handleCheckboxError } from '../services/errors'
 import useFavoritesPatchRequest from '../hooks/useFavoritesPatchRequest'
 
-const CitiesListItem = ({ city }) => {
-  const [checked, setChecked] = useState("UNCHECKED")
+const CitiesListItem = ({ city, initalState }) => {
+  const [checked, setChecked] = useState(initalState)
   const previousState = useRef(checked)
 
   const handleClick = () => setChecked("PENDING")
