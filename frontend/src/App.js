@@ -6,6 +6,7 @@ import CitiesListContainer from './components/CitiesListContainer';
 import FavoritesListContainer from './components/FavoritesListContainer';
 import { getFullPreferences } from './services/api';
 import useFetchRequest from './hooks/useFetchRequest';
+import AppLoading from './components/AppLoading';
 
 function App() {
   const [favoritesListId, setFavoritesListId] = useState(1)
@@ -29,17 +30,22 @@ function App() {
     [],
   )
 
+  const renderComponents = () => {
+    return <AppLoading />
+  }
+
   useFetchRequest(getAllPreferences)
 
   return (
     <div className="App">
-      <Header />
+      {/* <Header />
       <SearchBar />
       <CitiesListContainer />
       <FavoritesListContainer 
         key={favoritesListId} 
         onPress={resetFavoritesList}
-      />
+      /> */}
+      {renderComponents()}
     </div>
   );
 }
