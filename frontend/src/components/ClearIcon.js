@@ -1,11 +1,10 @@
-const ClearIcon = ({ hidden }) => {
-  const containerStyles = () => {
-    return hidden ? 'clear-container hidden' : 'clear-container'
-  }
+const ClearIcon = ({ hidden, onClick }) => {
+  const containerStyles = () => hidden ? 'clear-container hidden' : 'clear-container'
   
   return (
     <div 
       className={containerStyles()}
+      onClick={onClick}
     >
       <svg 
         xmlns="http://www.w3.org/2000/svg" 

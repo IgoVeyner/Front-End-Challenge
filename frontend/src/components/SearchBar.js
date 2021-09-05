@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { getCities } from '../services/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { setCities } from '../redux/actions/citiesActions'
@@ -12,12 +12,25 @@ import useFetchRequest from '../hooks/useFetchRequest'
 import { updateSearchTerm } from '../redux/actions/searchTermActions'
 import FilterIcon from './FilterIcon'
 import ClearIcon from './ClearIcon'
+import SearchInput from './SearchInput'
 
 const SearchBar = ({ onSubmit }) => {
+  const [inputId, setInputId] = useState(0)
+
   const searchTerm = useSelector(state => state.searchTerm)
   const offset = useSelector(state => state.offset)
 
   const dispatch = useDispatch()
+  const resetSearchTerm = () => dispatch(updateSearchTerm(''))
+
+  const resetSearchInput = () => {
+    setInputId(inputId + 1)
+  }
+
+  const handleClick = () => {
+    resetSearchTerm()
+    resetSearchInput()
+  }
 
   // TODO: abstract & refactor with Redux-Thunk
   const handleSubmit = useCallback(() => {
@@ -60,13 +73,14 @@ const SearchBar = ({ onSubmit }) => {
   return (
     <div className="search-container">
       <FilterIcon />
-      <input 
-        className="searchbar"
-        type="text" 
+      <SearchInput 
         onChange={debouncedResults} 
-        placeholder="Type to filter by city name or country"
+        key={inputId}
       />
-      <ClearIcon hidden={searchTerm === ""}/>
+      <ClearIcon 
+        hidden={searchTerm === ""}
+        onClick={handleClick}
+      />
     </div>
   )
 }
