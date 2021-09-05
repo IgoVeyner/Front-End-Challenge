@@ -1,11 +1,11 @@
-import FavoritesListItem from "./FavoritesListItem"
+import FavoritesListItemContainer from "./FavoritesListItemContainer"
 
 const FavoritesList = ({ favorites }) => {
   const renderList = () => {
     if (!favorites.data) return 
 
     return favorites.data.map(id => {
-      return <FavoritesListItem key={`fav-${id}`} id={id} />
+      return <FavoritesListItemContainer key={`fav-${id}`} id={id} />
     })
   }
 
