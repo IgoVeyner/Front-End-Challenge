@@ -9,6 +9,7 @@ import FavoritesError from './FavoritesError'
 import { endPreferenceReload } from '../redux/actions/preferencesReloadActions'
 import Pagination from './Pagination'
 import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
+import useGetPreferences from '../hooks/useGetPreferences'
 
 const FavoritesListContainer = ({ onPress }) => {
   const interval = useRef(null)
@@ -72,34 +73,8 @@ const FavoritesListContainer = ({ onPress }) => {
   const updateInterval = (callback, time) => {
     interval.current = setInterval(callback, time)
   }
-
-  const loadPreferences = useCallback(() => {
-    getPreferences()
-    .then(resp => {
-      // 500 error code comes back as false positive so we need to error handle here
-      if (resp.statusCode === 500) {
-        handleFavoitesContainerError(resp)
-        setBusy(false)
-        setError(true)
-      } else {
-        setBusy(false)
-        setFavorites(resp)
-      }
-    })
-    .catch(error => {
-      // does not catch 500 error code
-      handleFavoitesContainerError(error)
-    })
-    }, []
-  )
-
-  if (needsReload) {
-    setBusy(true)
-    loadPreferences()
-    finishPreferencesReload()
-  }
-
-  useFetchRequest(loadPreferences)
+  
+  useGetPreferences(setBusy, setError, setFavorites, needsReload)
 
   const renderInnerComponent = () => {
     if (busy) return <Loading />
