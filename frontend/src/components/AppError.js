@@ -1,6 +1,10 @@
 const AppError = ({ onPress }) => {
   return (
-    <button onClick={onPress}>Refresh</button>
+    <div className="app-error">
+      <h1>Oops!</h1>
+      <h2>Something went wrong...</h2>
+      <button onClick={onPress}>Try Again</button>
+    </div>
   )
 }
 
