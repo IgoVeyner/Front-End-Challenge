@@ -1,9 +1,9 @@
 const handlePreferencesReload = (state = false, action) => {
   switch (action.type) {
-    case "START_RELOAD":
+    case "START_PREFERENCES_RELOAD":
       return true
 
-    case "END_RELOAD":
+    case "END_PREFERENCES_RELOAD":
       return false 
 
     default: 

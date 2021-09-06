@@ -1,13 +1,13 @@
 export const startPreferenceReload = () => {
   return {
-    type: "START_RELOAD",
+    type: "START_PREFERENCES_RELOAD",
     payload: true
   }
 }
 
 export const endPreferenceReload = () => {
   return {
-    type: "END_RELOAD",
+    type: "END_PREFERENCES_RELOAD",
     payload: false
   }
 }
