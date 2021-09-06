@@ -75,7 +75,7 @@ const FavoritesListContainer = ({ onPress }) => {
   
   return (
     <>
-      <h2>Favorites</h2>
+      <div className="subheader">View all favorites</div>
 
       <div className="list-container">
         <Pagination

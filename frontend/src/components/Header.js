@@ -1,7 +1,7 @@
 const Header = () => {
   return (
-    <div>
-      <p>Select your favorite cities</p>
+    <div className="main-header">
+      Select your favorite cities
     </div>
   )
 }
