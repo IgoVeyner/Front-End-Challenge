@@ -7,6 +7,7 @@ import FavoritesList from './FavoritesList'
 import Loading from './Loading'
 import FavoritesError from './FavoritesError'
 import { endPreferenceReload } from '../redux/actions/preferencesReloadActions'
+import Pagination from './Pagination'
 
 const FavoritesListContainer = ({ onPress }) => {
   const [error, setError] = useState(false)
@@ -18,6 +19,20 @@ const FavoritesListContainer = ({ onPress }) => {
   const dispatch = useDispatch()
   const finishPreferencesReload = () => dispatch(endPreferenceReload())
 
+  const prevDisableCheck = () => {
+    if (busy) return true
+    // return offset === 0 ? true : false
+    return true
+  }
+
+  const nextDisableCheck = () => {
+    if (busy) return true
+    return true
+    // return offset + 10 >= favorites.total ? true : false
+  }
+
+  const disabledStatus = [prevDisableCheck(), nextDisableCheck()]
+  
   const prevPage = () => {
     // TODO
   }
@@ -26,14 +41,6 @@ const FavoritesListContainer = ({ onPress }) => {
     // TODO
   }
 
-  const prevDisableCheck = () => {
-    // TODO
-  }
-
-  const nextDisableCheck = () => {
-    // TODO
-  }
-  
   const loadPreferences = useCallback(() => {
     getPreferences()
     .then(resp => {
@@ -72,7 +79,19 @@ const FavoritesListContainer = ({ onPress }) => {
     <>
       <h2>Favorites</h2>
 
-      <div className="list-container">
+    <div className="list-container">
+      <Pagination
+        onNextClick={nextPage}
+        onPrevClick={prevPage}
+        disabledStatus={disabledStatus}
+        results={favorites}
+        // change to new Offset value in redux?
+        startValue={0}
+        busy={busy}
+        error={error}
+      />
+
+      {/* 
         <div>
           <button 
             onClick={prevPage} 
@@ -85,7 +104,7 @@ const FavoritesListContainer = ({ onPress }) => {
             disabled={nextDisableCheck()} >
             Next
           </button>
-        </div>
+        </div> */}
 
         <div className="list-inner-container">
           {renderInnerComponent()}

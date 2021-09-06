@@ -72,7 +72,7 @@ const CitiesListContainer = () => {
   return (
     <div className="list-container"> 
       <Pagination 
-        onNextClick={onNextClick || null}
+        onNextClick={onNextClick}
         onPrevClick={onPrevClick}
         disabledStatus={disabledStatus}
         results={cities}
