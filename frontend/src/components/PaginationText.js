@@ -1,5 +1,8 @@
-const PaginationText = ({ results, startValue }) => {
+const PaginationText = ({ results, startValue, busy, error }) => {
   const renderResultsText = () => {
+    if (error) return 'error'
+    if (busy) return '...' 
+    
     const {data, total} = results
     
     if (results.total) {

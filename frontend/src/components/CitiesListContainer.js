@@ -34,6 +34,8 @@ const CitiesListContainer = () => {
         disabledStatus={disabledStatus}
         results={cities}
         startValue={offset}
+        busy={loading}
+        error={searchError}
       />
       
       <div className="list-inner-container">

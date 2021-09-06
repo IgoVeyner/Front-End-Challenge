@@ -2,7 +2,8 @@ import PaginationButton from "./PaginationButton"
 import PaginationText from "./PaginationText"
 
 const Pagination = ({ 
-    onPrevClick, onNextClick, disabledStatus, results, startValue 
+    onPrevClick, onNextClick, disabledStatus, 
+    results, startValue, busy, error
   }) => {
   const [prevDisabled, nextDisabled] = disabledStatus
 
@@ -18,6 +19,8 @@ const Pagination = ({
         <PaginationText
           results={results}
           startValue={startValue}
+          busy={busy}
+          error={error}
         />
 
         <PaginationButton
