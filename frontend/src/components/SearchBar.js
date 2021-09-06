@@ -6,7 +6,7 @@ import ClearIcon from './ClearIcon'
 import SearchInput from './SearchInput'
 import useSearch from '../hooks/useSearch'
 
-const SearchBar = ({ onSubmit }) => {
+const SearchBar = () => {
   const [inputId, setInputId] = useState(0)
 
   // TODO: move search term into clear icon
