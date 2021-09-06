@@ -12,6 +12,9 @@ const CitiesListContainer = () => {
   const searchError = useSelector(state => state.searchError)
 
   const dispatch = useDispatch()
+
+  // TODO: debounce theses requests or else pressing buttons a lot of times becomes 
+  //       a very bad experiences
   const nextPage = () => dispatch(updateOffset(10))
   const prevPage = () => dispatch(updateOffset(-10))
 

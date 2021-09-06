@@ -18,9 +18,20 @@
 
     button
       @extend %button-small
+      background-color: $main-grey
+      transition: all 0.3s ease 
+
+      &:hover
+        background-color: darken($main-grey, 5%)
+        font-weight: bold
       
       &:disabled
         cursor: default 
+        background-color: initial
+
+        &:hover
+          font-weight: initial
+          background-color: initial
 
     .prev-button
       border-right: solid 1px $main-border-color
@@ -34,6 +45,7 @@
     display: grid
     place-items: center
     font-size: 14px
+    cursor: default
 
     span
       margin: 0px 0.5em
