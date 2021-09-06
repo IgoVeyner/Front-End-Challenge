@@ -1,8 +1,25 @@
 const AppLoading = () => {
   return (
-    <>
-      Loading...
-    </>
+    <div className="app-loading">
+      <div className="lds-roller">
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+      </div>
+    </div>
   )
 }
 
