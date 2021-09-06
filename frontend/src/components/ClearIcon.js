@@ -1,4 +1,4 @@
-const ClearIcon = ({ hidden, onClick }) => {
+const ClearIcon = ({ hidden, onClick }) => {  
   const containerStyles = () => hidden ? 'clear-container hidden' : 'clear-container'
   
   return (

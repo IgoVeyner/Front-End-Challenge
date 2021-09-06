@@ -9,7 +9,6 @@ import useSearch from '../hooks/useSearch'
 const SearchBar = () => {
   const [inputId, setInputId] = useState(0)
 
-  // TODO: move search term into clear icon
   const searchTerm = useSelector(state => state.searchTerm)
 
   const dispatch = useDispatch()
