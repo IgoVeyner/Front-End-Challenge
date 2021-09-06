@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getPreferences } from "../services/api"
 import { handleFavoitesContainerError } from '../services/errors'
@@ -8,37 +8,69 @@ import Loading from './Loading'
 import FavoritesError from './FavoritesError'
 import { endPreferenceReload } from '../redux/actions/preferencesReloadActions'
 import Pagination from './Pagination'
+import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
 
 const FavoritesListContainer = ({ onPress }) => {
+  const interval = useRef(null)
+  const nextPageClicks = useRef(0)
+  const prevPageClicks = useRef(0)
+
   const [error, setError] = useState(false)
   const [favorites, setFavorites] = useState([])
   const [busy, setBusy] = useState(true)
 
   const needsReload = useSelector(state => state.preferencesReload)
+  const offset = useSelector(state => state.preferencesOffset)
 
   const dispatch = useDispatch()
   const finishPreferencesReload = () => dispatch(endPreferenceReload())
 
+  // TODO: 
+  //      add conditional to make sure offset doesn't go out of bounds after
+  //      removing a favorite
+
   const prevDisableCheck = () => {
-    if (busy) return true
-    // return offset === 0 ? true : false
-    return true
+    if (busy || error) return true
+    return offset === 0 ? true : false
   }
 
   const nextDisableCheck = () => {
-    if (busy) return true
-    return true
-    // return offset + 10 >= favorites.total ? true : false
+    if (busy || error) return true
+    return offset + 10 >= favorites.total ? true : false
   }
 
   const disabledStatus = [prevDisableCheck(), nextDisableCheck()]
-  
-  const prevPage = () => {
-    // TODO
+
+  const onNextClick = () => {
+    const nextPage = () => {
+      const calulateMaxNumber = () => {
+        return favorites.total - favorites.total % 10
+      }
+
+      const newOffset = Math.min(calulateMaxNumber() - offset, nextPageClicks.current * 10)
+      dispatch(updatePreferncesOffset(newOffset))
+      nextPageClicks.current = 0
+    }
+
+    clearInterval(interval.current)
+    nextPageClicks.current += 1
+    updateInterval(nextPage, 500)
   }
 
-  const nextPage = () => {
-    // TODO
+  const onPrevClick = () => {
+    const prevPage = () => {
+      const newOffset = Math.max(0 - offset, prevPageClicks.current * -10)
+      dispatch(updatePreferncesOffset(newOffset))
+      prevPageClicks.current = 0
+    }
+
+    clearInterval(interval.current)
+    prevPageClicks.current += 1
+    updateInterval(prevPage, 500)
+  }
+
+  const updateInterval = (callback, time) => {
+    interval.current = setInterval(callback, time)
   }
 
   const loadPreferences = useCallback(() => {
@@ -79,32 +111,16 @@ const FavoritesListContainer = ({ onPress }) => {
     <>
       <h2>Favorites</h2>
 
-    <div className="list-container">
-      <Pagination
-        onNextClick={nextPage}
-        onPrevClick={prevPage}
-        disabledStatus={disabledStatus}
-        results={favorites}
-        // change to new Offset value in redux?
-        startValue={0}
-        busy={busy}
-        error={error}
-      />
-
-      {/* 
-        <div>
-          <button 
-            onClick={prevPage} 
-            disabled={prevDisableCheck()} >
-            Prev
-          </button>
-
-          <button 
-            onClick={nextPage} 
-            disabled={nextDisableCheck()} >
-            Next
-          </button>
-        </div> */}
+      <div className="list-container">
+        <Pagination
+          onNextClick={onNextClick}
+          onPrevClick={onPrevClick}
+          disabledStatus={disabledStatus}
+          results={favorites}
+          startValue={offset}
+          busy={busy}
+          error={error}
+        />
 
         <div className="list-inner-container">
           {renderInnerComponent()}
