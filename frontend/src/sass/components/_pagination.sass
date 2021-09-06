@@ -1,0 +1,35 @@
+.pagination
+  width: 500px
+  border: solid 1px $main-border-color
+  border-bottom: none
+  display: grid
+  grid-template-columns: 1fr 2fr 1fr
+  border-top-left-radius: 20px
+  border-top-right-radius: 20px
+
+  .page-button-container
+    display: flex
+
+    &:first-of-type()
+      justify-content: left
+
+    &:last-of-type()
+      justify-self: right
+
+    button
+      @extend %button-small
+      
+      &:disabled
+        cursor: default 
+
+    .prev-button
+      border-right: solid 1px $main-border-color
+      border-top-left-radius: 20px
+        
+    .next-button
+      border-top-right-radius: 20px 
+      border-left: solid 1px $main-border-color
+      
+  .page-total
+    display: grid
+    place-items: center

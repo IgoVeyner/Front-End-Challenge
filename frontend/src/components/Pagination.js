@@ -2,18 +2,28 @@ const Pagination = ({ onPrevClick, onNextClick, disabledStatus}) => {
   const [prevDisabled, nextDisabled] = disabledStatus
 
   return (
-      <div>
-        <button 
-          onClick={onPrevClick} 
-          disabled={prevDisabled} >
-          Prev
-        </button>
+      <div className="pagination">
+        <div className="page-button-container">
+          <button 
+            className="prev-button"
+            onClick={onPrevClick} 
+            disabled={prevDisabled} >
+            Prev
+          </button>
+        </div>
 
-        <button 
-          onClick={onNextClick} 
-          disabled={nextDisabled} >
-          Next
-        </button>
+        <div className="page-total">
+          {`Displaying results x - x of x`}
+        </div>
+
+        <div className="page-button-container">
+          <button 
+            className="next-button"
+            onClick={onNextClick} 
+            disabled={nextDisabled} >
+            Next
+          </button>
+        </div>
       </div>
   )
 }
