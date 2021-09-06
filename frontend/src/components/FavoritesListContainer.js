@@ -1,12 +1,8 @@
-import { useCallback, useState, useRef } from 'react'
+import { useState, useRef } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { getPreferences } from "../services/api"
-import { handleFavoitesContainerError } from '../services/errors'
-import useFetchRequest from "../hooks/useFetchRequest"
 import FavoritesList from './FavoritesList'
 import Loading from './Loading'
 import FavoritesError from './FavoritesError'
-import { endPreferenceReload } from '../redux/actions/preferencesReloadActions'
 import Pagination from './Pagination'
 import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
 import useGetPreferences from '../hooks/useGetPreferences'
@@ -24,11 +20,6 @@ const FavoritesListContainer = ({ onPress }) => {
   const offset = useSelector(state => state.preferencesOffset)
 
   const dispatch = useDispatch()
-  const finishPreferencesReload = () => dispatch(endPreferenceReload())
-
-  // TODO: 
-  //      add conditional to make sure offset doesn't go out of bounds after
-  //      removing a favorite
 
   const prevDisableCheck = () => {
     if (busy || error) return true
