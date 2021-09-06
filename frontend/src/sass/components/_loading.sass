@@ -4,11 +4,20 @@
   display: grid
   place-items: center
 
+.container-loading
+  height: 100% 
+
+  .lds-roller
+    top: 35%
+
+
 .lds-roller 
   display: inline-block
   position: relative
   width: 40px
   height: 40px
+  top: -20px
+  left: -20px
 
   div 
     animation: lds-roller 1.7s cubic-bezier(0.3, 0, 0.2, 1) infinite
