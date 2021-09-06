@@ -42,7 +42,6 @@ const CitiesListItem = ({ city, initalState }) => {
     }, [city.geonameid, dispatch, favorites]
   )
   
-  // TODO fetch new preferences on completion
   const onUncheck = useCallback(() => {
     const setNeedsReload = () => dispatch(startPreferenceReload())
     const updateFavorites = (preferences) => dispatch(setPreferences(preferences))

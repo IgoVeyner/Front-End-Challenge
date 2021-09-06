@@ -1,6 +1,9 @@
-const FavoritesListItem = ({ city }) => {
+const FavoritesListItem = ({ city, onPress }) => {
   return (
-    <div className="favorites-list-item">
+    <div 
+      className="favorites-list-item"
+      onClick={onPress}  
+    >
       <div>{city.name} ({city.subcountry})</div>
     </div>
   )
