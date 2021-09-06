@@ -5,10 +5,18 @@ const Pagination = ({
 
   const renderResultsText = () => {
     const {data, total} = results
-    const resultsEnd = Math.min(data.length + startValue, total)
-
+    
     if (results.total) {
-      return `Displaying results ${startValue + 1} - ${resultsEnd} of ${total}`
+      const resultsEnd = Math.min(data.length + startValue, total)
+      return (
+        <div>
+          <span>{startValue + 1}</span>
+          -
+          <span>{resultsEnd}</span>
+          of
+          <span>{total}</span>
+        </div>
+      )
     } 
   }
 
