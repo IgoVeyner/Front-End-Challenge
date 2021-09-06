@@ -19,12 +19,12 @@ const CitiesListContainer = () => {
   const dispatch = useDispatch()
   
   const prevDisableCheck = () => {
-    if (loading) return true
+    if (loading || searchError) return true
     return offset === 0 ? true : false 
   }
 
   const nextDisableCheck = () => {
-    if (loading) return true
+    if (loading || searchError) return true
     return offset + 10 >= cities.total ? true : false
   }
 
