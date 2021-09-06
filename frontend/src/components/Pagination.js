@@ -1,26 +1,10 @@
 import PaginationButton from "./PaginationButton"
+import PaginationText from "./PaginationText"
 
 const Pagination = ({ 
     onPrevClick, onNextClick, disabledStatus, results, startValue 
   }) => {
   const [prevDisabled, nextDisabled] = disabledStatus
-
-  const renderResultsText = () => {
-    const {data, total} = results
-    
-    if (results.total) {
-      const resultsEnd = Math.min(data.length + startValue, total)
-      return (
-        <div>
-          <span>{startValue + 1}</span>
-          -
-          <span>{resultsEnd}</span>
-          of
-          <span>{total}</span>
-        </div>
-      )
-    } 
-  }
 
   return (
       <div className="pagination">
@@ -31,9 +15,10 @@ const Pagination = ({
           text="<"
         />
 
-        <div className="page-total">
-          {renderResultsText()}
-        </div>
+        <PaginationText
+          results={results}
+          startValue={startValue}
+        />
 
         <PaginationButton
           onClick={onNextClick}
