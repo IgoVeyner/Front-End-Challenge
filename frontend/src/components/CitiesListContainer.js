@@ -18,8 +18,15 @@ const CitiesListContainer = () => {
 
   const dispatch = useDispatch()
   
-  const prevDisableCheck = () => offset === 0 ? true : false 
-  const nextDisableCheck = () => offset + 10 >= cities.total ? true : false
+  const prevDisableCheck = () => {
+    if (loading) return true
+    return offset === 0 ? true : false 
+  }
+
+  const nextDisableCheck = () => {
+    if (loading) return true
+    return offset + 10 >= cities.total ? true : false
+  }
 
   const disabledStatus = [prevDisableCheck(), nextDisableCheck()]
 
