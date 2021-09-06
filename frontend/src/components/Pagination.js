@@ -1,3 +1,5 @@
+import PaginationButton from "./PaginationButton"
+
 const Pagination = ({ 
     onPrevClick, onNextClick, disabledStatus, results, startValue 
   }) => {
@@ -22,27 +24,23 @@ const Pagination = ({
 
   return (
       <div className="pagination">
-        <div className="page-button-container">
-          <button 
-            className="prev-button"
-            onClick={onPrevClick} 
-            disabled={prevDisabled} >
-            Prev
-          </button>
-        </div>
+        <PaginationButton 
+          onClick={onPrevClick}
+          status={prevDisabled}
+          classNameArg="prev-button"
+          text="<"
+        />
 
         <div className="page-total">
           {renderResultsText()}
         </div>
 
-        <div className="page-button-container">
-          <button 
-            className="next-button"
-            onClick={onNextClick} 
-            disabled={nextDisabled} >
-            Next
-          </button>
-        </div>
+        <PaginationButton
+          onClick={onNextClick}
+          status={nextDisabled}
+          classNameArg='next-button'
+          text=">"
+        />
       </div>
   )
 }
