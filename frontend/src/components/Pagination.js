@@ -1,5 +1,16 @@
-const Pagination = ({ onPrevClick, onNextClick, disabledStatus}) => {
+const Pagination = ({ 
+    onPrevClick, onNextClick, disabledStatus, results, startValue 
+  }) => {
   const [prevDisabled, nextDisabled] = disabledStatus
+
+  const renderResultsText = () => {
+    const {data, total} = results
+    const resultsEnd = Math.min(data.length + startValue, total)
+
+    if (results.total) {
+      return `Displaying results ${startValue + 1} - ${resultsEnd} of ${total}`
+    } 
+  }
 
   return (
       <div className="pagination">
@@ -13,7 +24,7 @@ const Pagination = ({ onPrevClick, onNextClick, disabledStatus}) => {
         </div>
 
         <div className="page-total">
-          {`Displaying results x - x of x`}
+          {renderResultsText()}
         </div>
 
         <div className="page-button-container">

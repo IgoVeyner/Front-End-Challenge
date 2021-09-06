@@ -32,6 +32,8 @@ const CitiesListContainer = () => {
         onNextClick={nextPage}
         onPrevClick={prevPage}
         disabledStatus={disabledStatus}
+        results={cities}
+        startValue={offset}
       />
       
       <div className="list-inner-container">
