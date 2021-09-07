@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 import FavoritesList from './FavoritesList'
 import Loading from './Loading'
 import FavoritesError from './FavoritesError'
 import Pagination from './Pagination'
-import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
 import useGetPreferences from '../hooks/useGetPreferences'
 import useCancelableFetch from '../hooks/useCancelableFetch'
+import useNextClick from '../hooks/useNextClick'
+import usePrevClick from '../hooks/usePrevClick'
 
 const FavoritesListContainer = ({ onPress }) => {
   const interval = useRef(null)
@@ -20,8 +21,6 @@ const FavoritesListContainer = ({ onPress }) => {
   const needsReload = useSelector(state => state.preferencesReload)
   const offset = useSelector(state => state.preferencesOffset)
 
-  const dispatch = useDispatch()
-
   const prevDisableCheck = () => {
     if (busy || error) return true
     return offset === 0 ? true : false
@@ -34,37 +33,8 @@ const FavoritesListContainer = ({ onPress }) => {
 
   const disabledStatus = [prevDisableCheck(), nextDisableCheck()]
 
-  const onNextClick = () => {
-    const nextPage = () => {
-      const calulateMaxNumber = () => {
-        return favorites.total - favorites.total % 10
-      }
-
-      const newOffset = Math.min(calulateMaxNumber() - offset, nextPageClicks.current * 10)
-      dispatch(updatePreferncesOffset(newOffset))
-      nextPageClicks.current = 0
-    }
-
-    clearInterval(interval.current)
-    nextPageClicks.current += 1
-    updateInterval(nextPage, 500)
-  }
-
-  const onPrevClick = () => {
-    const prevPage = () => {
-      const newOffset = Math.max(0 - offset, prevPageClicks.current * -10)
-      dispatch(updatePreferncesOffset(newOffset))
-      prevPageClicks.current = 0
-    }
-
-    clearInterval(interval.current)
-    prevPageClicks.current += 1
-    updateInterval(prevPage, 500)
-  }
-
-  const updateInterval = (callback, time) => {
-    interval.current = setInterval(callback, time)
-  }
+  const nextPage = useNextClick(favorites, offset, nextPageClicks, interval)
+  const prevPage = usePrevClick(offset, prevPageClicks, interval)
   
   const getPreferences = useGetPreferences(setBusy, setError, setFavorites, needsReload)
   useCancelableFetch(getPreferences)
@@ -81,8 +51,8 @@ const FavoritesListContainer = ({ onPress }) => {
 
       <div className="list-container">
         <Pagination
-          onNextClick={onNextClick}
-          onPrevClick={onPrevClick}
+          onNextClick={nextPage}
+          onPrevClick={prevPage}
           disabledStatus={disabledStatus}
           results={favorites}
           startValue={offset}
