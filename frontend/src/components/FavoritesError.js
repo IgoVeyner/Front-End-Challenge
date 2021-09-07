@@ -1,11 +1,10 @@
 const FavoritesError = ({ onPress }) => {
   return (
-    <div>
+    <div className="favorites-error">
       <div>
-        Something went wrong...
+        Failed to load favorites <br/>
+        <button onClick={onPress}>Try Again</button>
       </div>
-
-      <button onClick={onPress}>Try Again</button>
     </div>
   )
 }
