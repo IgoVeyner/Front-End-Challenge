@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react"
-import useFetchRequest from "../hooks/useFetchRequest"
+import useCancelableFetch from "../hooks/useCancelableFetch"
 import { getCity } from "../services/api"
 import { handleFavoritesItemError } from "../services/errors"
 import FavoritesListItem from "./FavoritesListItem"
@@ -42,7 +42,8 @@ const FavoritesListItemContainer = ({ id }) => {
     return <FavoritesListItem city={cityData} />
   }
 
-  useFetchRequest(getCityData)
+  // useFetchRequest(getCityData)
+  useCancelableFetch(getCityData)
 
   return (
     <>
