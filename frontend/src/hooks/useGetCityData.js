@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { getCity } from "../services/api"
 import { handleFavoritesItemError } from "../services/errors"
 
-const useGetCityData = (id, setBusy, setError, setCityData) => {
+const useGetCityData = (id, setBusy, setError, setCityData, busy) => {
   useEffect(() => {
     let ignore = false 
 
@@ -20,9 +20,10 @@ const useGetCityData = (id, setBusy, setError, setCityData) => {
       }
     }
 
-    getData()
+    if (busy) getData()
+
     return () => {ignore = true}
-  }, [id, setBusy, setError, setCityData])
+  }, [id, setBusy, setError, setCityData, busy])
 }
 
 export default useGetCityData
