@@ -1,0 +1,32 @@
+.app-error
+  height: 100vh
+  width: 100vw
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  
+  button
+    @extend %button-large
+    @extend %try-again-button
+
+  h1
+    font-size: 40px
+    margin: 0
+    color: darken($main-grey, 50)
+    text-shadow: 1px 2px 3px black
+  
+  h2 
+    color: darken($main-grey, 20)
+
+.search-error
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  color: darken($main-grey, 20%)
+
+  button
+    @extend %button-medium
+    @extend %try-again-button
+    margin-top: $spaceL

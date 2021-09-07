@@ -35,12 +35,12 @@ const SearchError = () => {
   }
   
   return (
-    <div>
+    <div className="search-error">
       <div>
-        Something went wrong..
+        Failed to load search <br/>
+        <button onClick={handleClick}>Try Again</button>
       </div>
 
-      <button onClick={handleClick}>Try Again</button>
     </div>
   )
 }
