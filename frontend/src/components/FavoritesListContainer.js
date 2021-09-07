@@ -8,6 +8,7 @@ import useGetPreferences from '../hooks/useGetPreferences'
 import useCancelableFetch from '../hooks/useCancelableFetch'
 import useNextClick from '../hooks/useNextClick'
 import usePrevClick from '../hooks/usePrevClick'
+import { prevDisableCheck, nextDisableCheck } from '../services/pagination'
 
 const FavoritesListContainer = ({ onPress }) => {
   const interval = useRef(null)
@@ -21,17 +22,10 @@ const FavoritesListContainer = ({ onPress }) => {
   const needsReload = useSelector(state => state.preferencesReload)
   const offset = useSelector(state => state.preferencesOffset)
 
-  const prevDisableCheck = () => {
-    if (busy || error) return true
-    return offset === 0 ? true : false
-  }
-
-  const nextDisableCheck = () => {
-    if (busy || error) return true
-    return offset + 10 >= favorites.total ? true : false
-  }
-
-  const disabledStatus = [prevDisableCheck(), nextDisableCheck()]
+  const disabledStatus = [
+    prevDisableCheck(busy, error, favorites, offset), 
+    nextDisableCheck(busy, error, favorites, offset)
+  ]
 
   const nextPage = useNextClick(favorites, offset, nextPageClicks, interval)
   const prevPage = usePrevClick(offset, prevPageClicks, interval)
