@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import FavoritesList from './FavoritesList'
 import Loading from './Loading'
 import FavoritesError from './FavoritesError'
@@ -9,6 +9,7 @@ import useCancelableFetch from '../hooks/useCancelableFetch'
 import useNextClick from '../hooks/useNextClick'
 import usePrevClick from '../hooks/usePrevClick'
 import { prevDisableCheck, nextDisableCheck } from '../services/pagination'
+import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
 
 const FavoritesListContainer = ({ onPress }) => {
   const interval = useRef(null)
@@ -22,13 +23,16 @@ const FavoritesListContainer = ({ onPress }) => {
   const needsReload = useSelector(state => state.preferencesReload)
   const offset = useSelector(state => state.preferencesOffset)
 
+  const dispatch = useDispatch()
+  const updateOffset = (data) => dispatch(updatePreferncesOffset(data))
+
   const disabledStatus = [
     prevDisableCheck(busy, error, favorites, offset), 
     nextDisableCheck(busy, error, favorites, offset)
   ]
 
-  const nextPage = useNextClick(favorites, offset, nextPageClicks, interval)
-  const prevPage = usePrevClick(offset, prevPageClicks, interval)
+  const nextPage = useNextClick(favorites, offset, nextPageClicks, interval, updateOffset)
+  const prevPage = usePrevClick(offset, prevPageClicks, interval, updateOffset)
   
   const getPreferences = useGetPreferences(setBusy, setError, setFavorites, needsReload)
   useCancelableFetch(getPreferences)
