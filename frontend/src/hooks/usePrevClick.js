@@ -9,7 +9,7 @@ const usePrevClick = (offset, counter, interval) => {
   const prevPage = useCallback(() => {
     const updateOffset = (data) => dispatch(updatePreferncesOffset(data))
     onPrevClick(offset, counter, interval, updateOffset)
-  })
+  },[counter, offset, interval, dispatch])
 
   return prevPage
 }
