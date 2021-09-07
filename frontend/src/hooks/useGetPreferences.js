@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react"
+import { useCallback } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { getPreferences } from "../services/api"
 import { handleFavoitesContainerError } from '../services/errors'
@@ -35,9 +35,7 @@ const useGetPreferences = (setBusy, setError, setFavorites, needsReload) => {
     }, [setBusy, setError, setFavorites, offset, needsReload, dispatch]
   )
 
-  useEffect(() => { 
-    loadPreferences()
-  }, [loadPreferences])
+  return loadPreferences
 }
 
 export default useGetPreferences

@@ -6,6 +6,7 @@ import FavoritesError from './FavoritesError'
 import Pagination from './Pagination'
 import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
 import useGetPreferences from '../hooks/useGetPreferences'
+import useCancelableFetch from '../hooks/useCancelableFetch'
 
 const FavoritesListContainer = ({ onPress }) => {
   const interval = useRef(null)
@@ -65,7 +66,8 @@ const FavoritesListContainer = ({ onPress }) => {
     interval.current = setInterval(callback, time)
   }
   
-  useGetPreferences(setBusy, setError, setFavorites, needsReload)
+  const getPreferences = useGetPreferences(setBusy, setError, setFavorites, needsReload)
+  useCancelableFetch(getPreferences)
 
   const renderInnerComponent = () => {
     if (busy) return <Loading />
