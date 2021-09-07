@@ -18,7 +18,10 @@ const FavoritesListItem = ({ city }) => {
       className="favorites-list-item" 
       onClick={handleClick}
     >
-      <div>{city.name} ({city.subcountry})</div>
+      <h1 className="city-name">{city.name}</h1>
+      <div className="city-text">
+        {city.subcountry} - {city.country}
+      </div>
     </div>
   )
 }
