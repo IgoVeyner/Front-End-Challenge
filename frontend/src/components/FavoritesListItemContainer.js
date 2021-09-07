@@ -1,8 +1,6 @@
 import { useState } from "react"
-import useCancelableFetch from "../hooks/useCancelableFetch"
 import useGetCityData from "../hooks/useGetCityData"
 import FavoritesListItem from "./FavoritesListItem"
-import FavoritesListItemError from "./FavoritesListItemError"
 import FavoritesListItemLoading from "./FavoritesListItemLoading"
 
 const FavoritesListItemContainer = ({ id }) => {
@@ -12,12 +10,13 @@ const FavoritesListItemContainer = ({ id }) => {
 
   const renderListItemComponent = () => {
     if (busy) return <FavoritesListItemLoading />
-    if (error) return <FavoritesListItemError onPress={getCityData} />
+
+    // TODO: reset component on press 
+    // if (error) return <FavoritesListItemError onPress={getCityData} />
     return <FavoritesListItem city={cityData} />
   }
 
-  const getCityData = useGetCityData(id, setBusy, setError, setCityData)
-  useCancelableFetch(getCityData)
+  useGetCityData(id, setBusy, setError, setCityData)
 
   return (
     <>
