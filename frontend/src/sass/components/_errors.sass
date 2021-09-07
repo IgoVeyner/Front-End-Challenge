@@ -30,3 +30,18 @@
     @extend %button-medium
     @extend %try-again-button
     margin-top: $spaceL
+
+.favorites-item-error
+  @extend .favorites-list-item
+  flex-direction: column
+  justify-content: space-evenly
+  align-items: center
+
+  div:first-of-type()
+    font-size: 16px
+    color: darken($main-grey, 30%)
+
+  div:last-of-type()
+    font-size: 14px
+    font-weight: bold
+    color: darken($main-grey, 40%)

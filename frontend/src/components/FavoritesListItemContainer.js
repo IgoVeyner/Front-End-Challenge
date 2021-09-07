@@ -14,7 +14,7 @@ const FavoritesListItemContainer = ({ id }) => {
   // TODO: make this into custom hook
   const getCityData = useCallback(
     () => {
-      setError(false)
+      setBusy(true)
       getCity(id)
       .then(resp => {
         // 500 error code come back as false positive 
@@ -22,9 +22,10 @@ const FavoritesListItemContainer = ({ id }) => {
           setError(true)
           handleFavoritesItemError(resp, id)
         } else {
-          setBusy(false)
+          setError(false)
           setCityData(resp)
         }
+        setBusy(false)
       })
       .catch(error => {
         // 500 error code wont be caught here
@@ -36,8 +37,8 @@ const FavoritesListItemContainer = ({ id }) => {
   )
 
   const renderListItemComponent = () => {
-    if (error) return <FavoritesListItemError onPress={getCityData} />
     if (busy) return <FavoritesListItemLoading />
+    if (error) return <FavoritesListItemError onPress={getCityData} />
     return <FavoritesListItem city={cityData} />
   }
 

@@ -1,8 +1,8 @@
 const FavoritesListItemError = ({ onPress }) => {
   return (
-    <div className="favorites-list-item">
-      <div>Could not get city data...</div>
-      <button onClick={onPress}>Try again</button>
+    <div className="favorites-item-error" onClick={onPress}>
+      <div>Failed to get city data...</div>
+      <div>Click to Try Again</div>
     </div>
   )
 }
