@@ -1,7 +1,7 @@
 const FavoritesListItemLoading = () => {
   return (
     <div className="favorites-item-loading">
-      <div class="lds-ellipsis">
+      <div className="lds-ellipsis">
         <div>
         </div>
         <div>
