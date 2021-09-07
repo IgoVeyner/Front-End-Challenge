@@ -6,6 +6,8 @@ import Loading from './Loading'
 import Pagination from "./Pagination"
 import SearchError from "./SearchError"
 import { prevDisableCheck, nextDisableCheck } from '../services/pagination'
+import useNextClick from "../hooks/useNextClick"
+import usePrevClick from "../hooks/usePrevClick"
 
 const CitiesListContainer = () => {
   const interval = useRef(null)
@@ -18,44 +20,16 @@ const CitiesListContainer = () => {
   const searchError = useSelector(state => state.searchError)
 
   const dispatch = useDispatch()
+  const updateCitiesOffset = (data) => dispatch(updateOffset(data))
   
   const disabledStatus = [
     prevDisableCheck(loading, searchError, cities, offset), 
     nextDisableCheck(loading, searchError, cities, offset)
   ]
 
-  const onNextClick = () => {
-    const nextPage = () => {
-      const calulateMaxNumber = () => {
-        return cities.total - cities.total % 10
-      }
-
-      const newOffset = Math.min(calulateMaxNumber() - offset, nextPageClicks.current * 10)
-      dispatch(updateOffset(newOffset))
-      nextPageClicks.current = 0
-    }
-
-    clearInterval(interval.current)
-    nextPageClicks.current += 1
-    updateInterval(nextPage, 500)
-  }
-
-  const onPrevClick = () => {
-    const prevPage = () => {
-      const newOffset = Math.max(0 - offset, prevPageClicks.current * -10)
-      dispatch(updateOffset(newOffset))
-      prevPageClicks.current = 0
-    }
-
-    clearInterval(interval.current)
-    prevPageClicks.current += 1
-    updateInterval(prevPage, 500)
-  }
-
-  const updateInterval = (callback, time) => {
-    interval.current = setInterval(callback, time)
-  }
-
+  const nextPage = useNextClick(cities, offset, nextPageClicks, interval, updateCitiesOffset)
+  const prevPage = usePrevClick(offset, prevPageClicks, interval, updateCitiesOffset)
+  
   const renderInnerComponent = () => {
     if (loading) return <Loading />
     if (searchError) return <SearchError />
@@ -65,8 +39,8 @@ const CitiesListContainer = () => {
   return (
     <div className="list-container"> 
       <Pagination 
-        onNextClick={onNextClick}
-        onPrevClick={onPrevClick}
+        onNextClick={nextPage}
+        onPrevClick={prevPage}
         disabledStatus={disabledStatus}
         results={cities}
         startValue={offset}
