@@ -1,16 +1,16 @@
 import { useEffect } from 'react'
 import { makeCancelable } from '../services/api'
 
-const useCancelableFetch = (getCityData) => {
+const useCancelableFetch = (callback) => {
   useEffect(() => {
     const cancelablePromise = makeCancelable(
-      new Promise(r => getCityData())
+      new Promise(r => callback())
     )
     
     return (()=> {
       cancelablePromise.cancel()
     })
-  }, [getCityData])
+  }, [callback])
 }
 
 export default useCancelableFetch
