@@ -1,7 +1,16 @@
 const FavoritesListItemLoading = () => {
   return (
-    <div className="favorites-list-item">
-      ... loading city data ...
+    <div className="favorites-item-loading">
+      <div class="lds-ellipsis">
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+        <div>
+        </div>
+      </div>
     </div>
   )
 }
