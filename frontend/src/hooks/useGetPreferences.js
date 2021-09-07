@@ -1,41 +1,29 @@
-import { useCallback } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useEffect } from "react"
 import { getPreferences } from "../services/api"
 import { handleFavoitesContainerError } from '../services/errors'
-import { endPreferenceReload } from '../redux/actions/preferencesReloadActions'
 
-const useGetPreferences = (setBusy, setError, setFavorites, needsReload) => {
-  const offset = useSelector(state => state.preferencesOffset)
-
-  const dispatch = useDispatch()
-
-  const loadPreferences = useCallback(() => {
-    const finishPreferencesReload = () => dispatch(endPreferenceReload())
-
-    setBusy(true)
-    getPreferences(offset)
-    .then(resp => {
-      // 500 error code comes back as false positive so we need to error handle here
-      if (resp.statusCode === 500) {
-        handleFavoitesContainerError(resp)
-        setError(true)
-      } else {
-        setError(false)
-        setFavorites(resp)
-        if (needsReload) {
-          finishPreferencesReload()
+const useGetPreferences = (offset, setError, setFavorites, needsReload, setBusy, busy) => {
+  useEffect(() => {
+    let ignore = false 
+    
+    async function getData() {
+      const response = await getPreferences(offset)
+      if (!ignore) {
+        if (response.statusCode === 500) {
+          handleFavoitesContainerError(response)
+          setError(true)
+        } else {
+          setError(false)
+          setFavorites(response)
         }
+        setBusy(false)
       }
-      setBusy(false)
-    })
-    .catch(error => {
-      // does not catch 500 error code
-      handleFavoitesContainerError(error)
-    })
-    }, [setBusy, setError, setFavorites, offset, needsReload, dispatch]
-  )
+    }
 
-  return loadPreferences
+    if (busy) getData()
+
+    return () => {ignore = true}
+  }, [offset, setError, setFavorites, needsReload, setBusy, busy]);
 }
 
 export default useGetPreferences
