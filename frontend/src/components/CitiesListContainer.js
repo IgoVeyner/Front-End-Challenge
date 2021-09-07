@@ -5,6 +5,7 @@ import CitiesList from "./CitiesList"
 import Loading from './Loading'
 import Pagination from "./Pagination"
 import SearchError from "./SearchError"
+import { prevDisableCheck, nextDisableCheck } from '../services/pagination'
 
 const CitiesListContainer = () => {
   const interval = useRef(null)
@@ -18,18 +19,10 @@ const CitiesListContainer = () => {
 
   const dispatch = useDispatch()
   
-  const prevDisableCheck = () => {
-    if (loading || searchError) return true
-    return offset === 0 ? true : false 
-  }
-
-  const nextDisableCheck = () => {
-    if (loading || searchError) return true
-    return offset + 10 >= cities.total ? true : false
-  }
-
-  const disabledStatus = [prevDisableCheck(), nextDisableCheck()]
-
+  const disabledStatus = [
+    prevDisableCheck(loading, searchError, cities, offset), 
+    nextDisableCheck(loading, searchError, cities, offset)
+  ]
 
   const onNextClick = () => {
     const nextPage = () => {
