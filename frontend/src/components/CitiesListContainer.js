@@ -16,23 +16,23 @@ const CitiesListContainer = () => {
 
   const cities = useSelector(state => state.cities)
   const offset = useSelector(state => state.offset)
-  const loading = useSelector(state => state.searchLoading)
-  const searchError = useSelector(state => state.searchError)
+  const busy = useSelector(state => state.searchLoading)
+  const error = useSelector(state => state.searchError)
 
   const dispatch = useDispatch()
   const updateCitiesOffset = (data) => dispatch(updateOffset(data))
   
   const disabledStatus = [
-    prevDisableCheck(loading, searchError, cities, offset), 
-    nextDisableCheck(loading, searchError, cities, offset)
+    prevDisableCheck(busy, error, cities, offset), 
+    nextDisableCheck(busy, error, cities, offset)
   ]
 
   const nextPage = useNextClick(cities, offset, nextPageClicks, interval, updateCitiesOffset)
   const prevPage = usePrevClick(offset, prevPageClicks, interval, updateCitiesOffset)
   
   const renderInnerComponent = () => {
-    if (loading) return <Loading />
-    if (searchError) return <SearchError />
+    if (busy) return <Loading />
+    if (error) return <SearchError />
     return <CitiesList cities={cities} />
   }
 
@@ -44,8 +44,8 @@ const CitiesListContainer = () => {
         disabledStatus={disabledStatus}
         results={cities}
         startValue={offset}
-        busy={loading}
-        error={searchError}
+        busy={busy}
+        error={error}
       />
       
       <div className="list-inner-container">
