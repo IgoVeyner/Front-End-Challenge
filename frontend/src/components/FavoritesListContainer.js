@@ -5,11 +5,12 @@ import Loading from './Loading'
 import FavoritesError from './FavoritesError'
 import Pagination from './Pagination'
 import useGetPreferences from '../hooks/useGetPreferences'
-import useCancelableFetch from '../hooks/useCancelableFetch'
 import useNextClick from '../hooks/useNextClick'
 import usePrevClick from '../hooks/usePrevClick'
 import { prevDisableCheck, nextDisableCheck } from '../services/pagination'
 import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
+import useNeedsReload from '../hooks/useNeedsReload'
+import useOffsetUpdated from '../hooks/useOffsetUpdated'
 
 const FavoritesListContainer = ({ onPress }) => {
   const interval = useRef(null)
@@ -34,8 +35,9 @@ const FavoritesListContainer = ({ onPress }) => {
   const nextPage = useNextClick(favorites, offset, nextPageClicks, interval, updateOffset)
   const prevPage = usePrevClick(offset, prevPageClicks, interval, updateOffset)
   
-  const getPreferences = useGetPreferences(setBusy, setError, setFavorites, needsReload)
-  useCancelableFetch(getPreferences)
+  useGetPreferences(offset, setError, setFavorites, needsReload, setBusy, busy)
+  useNeedsReload(needsReload, setBusy)
+  useOffsetUpdated(offset, setBusy)
 
   const renderInnerComponent = () => {
     if (busy) return <Loading />
