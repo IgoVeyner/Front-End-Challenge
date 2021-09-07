@@ -1,4 +1,5 @@
 import { useSelector } from "react-redux"
+import { v4 as uuidv4 } from 'uuid';
 
 const CitiesListItemText = ({ data }) => {
   const {name, subcountry, country} = data
@@ -23,8 +24,8 @@ const CitiesListItemText = ({ data }) => {
   }
 
   const spanifyAndBolden = (word, bold) => {
-    if (bold) return <span className='bold'>{word}</span>
-    return <span>{word}</span>
+    if (bold) return <span key={uuidv4()} className='bold'>{word}</span>
+    return <span key={uuidv4()}>{word}</span>
   }
   
   return (
