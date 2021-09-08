@@ -24,6 +24,7 @@ const CitiesListItemText = ({ data }) => {
   }
 
   const spanifyAndBolden = (word, bold) => {
+    if (word.length === 0) return null 
     if (bold) return <span key={uuidv4()} className='bold'>{word}</span>
     return <span key={uuidv4()}>{word}</span>
   }
