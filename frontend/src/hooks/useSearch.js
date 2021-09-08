@@ -32,7 +32,6 @@ const useSearch = () => {
     }
 
     getData()
-
     return () => {ignore = true}
   }, [searchTerm, dispatch, offset]);
 }
