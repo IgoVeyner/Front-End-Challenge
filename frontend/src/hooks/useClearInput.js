@@ -1,8 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { updateSearchTerm } from '../redux/actions/searchTermActions'
 
-const useClearInput = (inputId, setInputId, needsClear, setNeedsClear) => {
+const useClearInput = () => {
+  const [inputId, setInputId] = useState(0)
+  const [needsClear, setNeedsClear] = useState(false)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -21,6 +24,11 @@ const useClearInput = (inputId, setInputId, needsClear, setNeedsClear) => {
     } 
 
   }, [dispatch, needsClear, inputId, setNeedsClear, setInputId]);
+
+  return {
+    handleClick: () => setNeedsClear(true),
+    key: inputId
+  }
 }
 
 export default useClearInput
