@@ -1,8 +1,7 @@
 # ASAPP Front End Challenge
+---
 
-In these files, you'll find the API needed to work on the ASAPP Front End
-Challenge. You should have an email with the challenge details.
-
+## Running the API
 To run the API you'll need a version of Node and NPM with `npx` (Node 8+). Then
 run `api-server` (for a \*nix like environment) or `api-server.bat` (for
 Windows).
@@ -11,129 +10,43 @@ Once that the server starts, it will be listening at http://localhost:3030
 
 The API reference is also available at http://localhost:3030/help
 
-> **Note:** This API was created for the challenge, and is not a battle-tested
-> production API. If you find a bug or issue that prevents you from doing the
-> challenge contact us as soon as possible.
+## Installing & Running the Frontend
+From the frontend directory run `npm install` to install and then `npm start` to start the server
 
 ---
-# Cities API
+## UX Changes
 
-* [GET /cities](#get-cities)
-* [GET /cities/:id](#get-citiesid)
-* [GET /preferences/cities](#get-preferencescities)
-* [PATCH /preferences/cities](#patch-preferencescities)
+### Pagination
+API GET '/cities' returns all results with no limit. Scrolling through a list up to 23,018 items long can be tedious and it's easy to get lost in. 
 
-### GET /cities
+To address this I've implemented pagination ontop of the container with buttons to go forward or back by intervals of 10. You can press the buttons multiple times quickly to move forward by x # of intervals up to either the first or last pages. 
 
-Returns the list of cities. It uses Offset-Limit pagination.
+### Number of Results
 
-The list was obtained from https://datahub.io/core/world-cities
+User has no idea how many results there are.
 
-The server returns the data sorted by city name.
+To go along with the pagination I've displayed the total results as well as displaying the indicies of the results you are looking at helping the user keep track of their position inside the larger result of list.
 
-#### Query Parameters
+### Moving User's Favorites
 
-- **offset**: the index where to start the page (minimum value 0).
-- **limit**: the number of items to return (minimum value 1).
-- **filter**: a string to filter the cities. The filtering implementation is
-  very limited, it doesn't do any stemming or fuzzy search. It simply does a
-  case insensitive search on name, county and subcountry.
+List of favorites can becomes hard to read / cluttered with many favorites.
 
-#### Response
+In the original mockup the list of favorites replaces the header. While this works for a small number of selections, as the list grows the size of the view will grow and it can become unruly. I've moved all of the user's favorite's to it's own container below the serach results. This is list is set up with pagination the same way as the results. This makes managing your favorites more manageable!
 
-```typescript
-type ApiResponse = {
-  data: CityInfo[];
-  total: number;
-  links: {
-    first: string;
-    next?: string;
-    prev?: string;
-    last: string;
-  };
-  filter?: string;
-};
+### Lookup City on Click
 
-type CityInfo = {
-  geonameid: number;
-  name: string;
-  country: string;
-  subcountry?: string;
-};
-```
+Removing favorites is time consuming. You have to manually type in the city or it's subcountry or country.
 
-- **data** is an array with the request results. By default results are limited
-  to 10 items.
-- **links** contain links to the first, next, previous, last pages. If there
-  aren't next or previous pages the links are undefined.
-- **filter** repeats the filter parameter given in the query string to indicate
-  that the result is filtered.
-- **total** the total number items available (`data.length <= total`)
+To go along with the favorites list I've implemented a feature to quickly search for a city on your favorites. Simply click on it from the favorites list and it will update the serach bar with the city name.
 
-City information:
+### Clear button
 
-- **geonameid** is a unique identifier that comes from the original data set.
-- The name **subcountry** comes from the original data set, and it represents a
-  State or Province inside the country. Some cities don't have a subcountry
-  (e.g. Monaco).
+A small quality of life improvement that allows you to quickly reset the searchbar. Its hidden until a non-white space character is input into the searchbar.
 
-### GET /cities/:id
+### Display Loading
 
-Returns the city name information for the given city id.
+Requests with this API can take up to 5 seconds to resolve. I've added various loading screens to signal to the user that the application is loading.
 
-#### Response
+### Display Failures
 
-```typescript
-type CityInfo = {
-  geonameid: number;
-  name: string;
-  country: string;
-  subcountry?: string;
-};
-```
-
-### GET /preferences/cities
-
-Returns the cities selected by the user.
-
-#### Query Parameters
-
-- **offset**: the index where to start the page (minimum value 0)
-- **limit**: the number of items to return (minimum value 1)
-
-#### Response
-
-```typescript
-type PreferredCitiesResponse = {
-  data: number[];
-  total: number;
-  links: {
-    first: string;
-    next?: string;
-    prev?: string;
-    last: string;
-  };
-};
-```
-
-- **data** is an array with the **geonameid** of each selected city.
-- **total** and **links** follows the same pagination patterns as `GET /cities`.
-
-### PATCH /preferences/cities
-
-Modifies the preferred cities.
-
-#### Request Payload
-
-An object where each property key is a city id, and each value is a boolean
-indicating if the city is selected or not.
-
-```typescript
-type PreferredCitiesPatch = {
-  [string]: boolean;
-};
-```
-
-#### Response
-
-Empty. It returns the 204 status code on success.
+Requests with this API fail ~ 10% of the time. I've added components to display failures to the user. I've also included buttons or click functionality to re-try the individual failed request.
