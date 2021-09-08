@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { getPreferences } from "../services/api"
-import { handleFavoritesContainerError } from '../services/errors'
+import { handleFavoritesError } from '../services/errors'
 
 const useGetPreferences = (offset, setError, setFavorites, needsReload, setBusy, busy) => {
   useEffect(() => {
@@ -10,7 +10,7 @@ const useGetPreferences = (offset, setError, setFavorites, needsReload, setBusy,
       const response = await getPreferences(offset)
       if (!ignore) {
         if (response.statusCode === 500) {
-          handleFavoritesContainerError(response)
+          handleFavoritesError(response)
           setError(true)
         } else {
           setError(false)

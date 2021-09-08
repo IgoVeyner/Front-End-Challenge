@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getFullPreferences } from '../services/api'
-import { handleFavoritesContainerError } from '../services/errors';
+import { handleFavoritesError } from '../services/errors';
 import { setPreferences } from '../redux/actions/preferencesActions';
 
 const useGetAllPreferences = () => {
@@ -21,7 +21,7 @@ const useGetAllPreferences = () => {
       if (!ignore) {
 
         if (response.statusCode === 500) {
-          handleFavoritesContainerError(response)
+          handleFavoritesError(response)
           setError(true)
         } else {
           setError(false)

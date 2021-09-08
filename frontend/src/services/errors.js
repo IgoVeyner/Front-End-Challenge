@@ -18,7 +18,7 @@ export const handleCheckboxError = (response, task) => {
   )
 }
 
-export const handleFavoritesContainerError = (response) => {
+export const handleFavoritesError = (response) => {
   console.error(
     "--- Favorites Error! --- \n", 
     `Status-Code: ${response.statusCode} \n`,
