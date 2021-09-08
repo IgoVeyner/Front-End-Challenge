@@ -1,17 +1,7 @@
-import { useDispatch } from 'react-redux'
-import { resetOffset } from '../redux/actions/offsetActions'
-import { updateSearchTerm } from '../redux/actions/searchTermActions'
+import useLookupFavorite from '../hooks/useLookupFavorite'
 
 const FavoritesListItem = ({ city }) => {
-  const dispatch = useDispatch()
-
-  const lookupCity = () => dispatch(updateSearchTerm(city.name))
-  const resetSearchOffset = () => dispatch(resetOffset())
-  
-  const handleClick = () => {
-    lookupCity()
-    resetSearchOffset()
-  }
+  const handleClick = useLookupFavorite(city.name)
 
   return (
     <div
