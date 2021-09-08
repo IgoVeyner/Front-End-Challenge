@@ -1,14 +1,13 @@
 import { useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { startPreferenceReload } from '../redux/actions/preferencesReloadActions'
 import { updatePreferences } from '../services/api'
 import { handleCheckboxError } from '../services/errors'
 import { setPreferences } from '../redux/actions/preferencesActions'
 
-const useFavoritesPatchRequest = (
-    checked, previousState, cityId, 
-    setChecked, favorites
-  ) => {
+const useFavoritesPatchRequest = (cityId, previousState, checked, setChecked) => {
+  const favorites = useSelector(state => state.preferences)
+
   const dispatch = useDispatch()
   const isMounted = useRef(false)
   
@@ -64,6 +63,7 @@ const useFavoritesPatchRequest = (
     
     return () => { ignore = true }
   }, [cityId, checked, previousState, setChecked, dispatch, favorites])
+
 }
 
 export default useFavoritesPatchRequest
