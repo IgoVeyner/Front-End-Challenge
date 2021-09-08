@@ -30,12 +30,14 @@ const useFavoritesPatchRequest = (
       const response = await updatePreferences(cityId, requestType)
       if (!ignore) {
         if (response.status === 500) {
+          
           if (requestType === "ADD") {
             setChecked("UNCHECKED")
             handleCheckboxError(response, "Add")
+          } else {
             setChecked("CHECKED")
             handleCheckboxError(response, "Remove")
-          }   
+          }
           
         } else {
           
