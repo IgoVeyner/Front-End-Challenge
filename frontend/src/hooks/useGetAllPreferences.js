@@ -1,7 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { useCallback } from 'react';
 import { getFullPreferences } from '../services/api'
-import { handleFavoitesContainerError } from '../services/errors';
+import { handleFavoritesContainerError } from '../services/errors';
 
 const useGetAllPreferences = (setPreferences, setError, setBusy) => {
   const dispatch = useDispatch()
@@ -15,7 +15,7 @@ const useGetAllPreferences = (setPreferences, setError, setBusy) => {
       .then(resp => {
         // 500 status codes come back as false positive
         if (resp.statusCode === 500) {
-          handleFavoitesContainerError(resp)
+          handleFavoritesContainerError(resp)
           setError(true)
         } else {
           setBusy(false)
@@ -24,7 +24,7 @@ const useGetAllPreferences = (setPreferences, setError, setBusy) => {
       })
       .catch(error => {
         // does not catch 500 error
-        handleFavoitesContainerError(error)
+        handleFavoritesContainerError(error)
         setError(true)
       })
     },

@@ -15,7 +15,6 @@ const useDebouncedSearch = () => {
       setNewSearchTerm(e.target.value)
       resetOffsetIndex()
     }
-    
     return debounce(handleChange, 400)
   }, [dispatch])
 
