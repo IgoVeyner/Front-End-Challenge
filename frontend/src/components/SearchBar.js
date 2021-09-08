@@ -4,7 +4,7 @@ import SearchInput from './SearchInput'
 import useSearch from '../hooks/useSearch'
 import useClearInput from '../hooks/useClearInput'
 
-const SearchBar = () => {
+const SearchBar = ({ onClick }) => {
   useSearch()
   const {handleClick, key} = useClearInput()
   

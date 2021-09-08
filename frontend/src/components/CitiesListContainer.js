@@ -6,7 +6,7 @@ import Pagination from "./Pagination"
 import SearchError from "./SearchError"
 import usePagination from "../hooks/usePagination"
 
-const CitiesListContainer = () => {
+const CitiesListContainer = ({ onPress }) => {
   const cities = useSelector(state => state.cities)
   const offset = useSelector(state => state.offset)
   const busy = useSelector(state => state.searchLoading)
@@ -18,10 +18,10 @@ const CitiesListContainer = () => {
   const { disabledStatus, nextPage, prevPage } = usePagination(
     cities, offset, busy, error, updateCitiesOffset
   )
-  
+
   const renderInnerComponent = () => {
     if (busy) return <Loading />
-    if (error) return <SearchError />
+    if (error) return <SearchError onPress={onPress} />
     return <CitiesList cities={cities} />
   }
 
