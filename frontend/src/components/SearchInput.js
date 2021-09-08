@@ -1,13 +1,12 @@
 import { useMemo, useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { resetOffset } from "../redux/actions/offsetActions"
 import { updateSearchTerm } from '../redux/actions/searchTermActions'
 import useDebounceCleanup from '../hooks/useDebounceCleanup'
 import debounce from 'lodash.debounce';
+import useUpdateInputValue from '../hooks/useUpdateInputValue'
 
 const SearchInput = () => {
-  const searchTerm = useSelector(state => state.searchTerm)
-
   const searchbar = useRef(null)
 
   const dispatch = useDispatch()
@@ -25,10 +24,7 @@ const SearchInput = () => {
   }, [dispatch])
 
   useDebounceCleanup(debouncedResults)
-
-  if (searchTerm) {
-    searchbar.current.value = searchTerm
-  }
+  useUpdateInputValue(searchbar)
 
   return (
     <input 
