@@ -1,37 +1,41 @@
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useCallback } from 'react';
 import { getFullPreferences } from '../services/api'
 import { handleFavoritesContainerError } from '../services/errors';
+import { setPreferences } from '../redux/actions/preferencesActions';
 
-const useGetAllPreferences = (setPreferences, setError, setBusy) => {
+const useGetAllPreferences = () => {
+  const [busy, setBusy] = useState(true)
+  const [error, setError] = useState(false)
+
+  const getAllPreferences = () => setBusy(true)
+  
   const dispatch = useDispatch()
 
-  const getAllPreferences = useCallback(
-    () => {
-      const setFullPreferences = (data) => dispatch(setPreferences(data))
+  useEffect(() => {
+    let ignore = false 
+    const setFullPreferences = (data) => dispatch(setPreferences(data))
 
-      setError(false)
-      getFullPreferences()
-      .then(resp => {
-        // 500 status codes come back as false positive
-        if (resp.statusCode === 500) {
-          handleFavoritesContainerError(resp)
+    async function getData() {
+      const response = await getFullPreferences()
+      if (!ignore) {
+
+        if (response.statusCode === 500) {
+          handleFavoritesContainerError(response)
           setError(true)
         } else {
-          setBusy(false)
-          setFullPreferences(resp.data)
+          setError(false)
+          setFullPreferences(response.data)
         }
-      })
-      .catch(error => {
-        // does not catch 500 error
-        handleFavoritesContainerError(error)
-        setError(true)
-      })
-    },
-    [dispatch, setPreferences, setError, setBusy],
-  )
+        setBusy(false)
+      }
+    }
 
-  return getAllPreferences
+    if (busy) getData()
+    return () => {ignore = true}
+  }, [dispatch, setBusy, setError, busy]);
+  
+  return [busy, error, getAllPreferences]
 }
 
 export default useGetAllPreferences
