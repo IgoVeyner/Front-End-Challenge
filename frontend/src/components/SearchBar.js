@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 import FilterIcon from './FilterIcon'
 import ClearIcon from './ClearIcon'
 import SearchInput from './SearchInput'
@@ -10,11 +9,9 @@ const SearchBar = () => {
   const [inputId, setInputId] = useState(0)
   const [needsClear, setNeedsClear] = useState(false)
 
-  const searchTerm = useSelector(state => state.searchTerm)
-
   const handleClick = () => setNeedsClear(true)
 
-  useSearch(searchTerm)
+  useSearch()
   useClearInput(inputId, setInputId, needsClear, setNeedsClear)
   
   return (
@@ -24,7 +21,6 @@ const SearchBar = () => {
         key={inputId}
       />
       <ClearIcon 
-        hidden={searchTerm === ""}
         onClick={handleClick}
       />
     </div>

@@ -6,8 +6,9 @@ import { setCities } from '../redux/actions/citiesActions'
 import { setSearchError } from '../redux/actions/searchErrorActions'
 import { setLoading } from "../redux/actions/searchLoadingActions"
 
-const useSearch = (searchTerm) => {
+const useSearch = () => {
   const offset = useSelector(state => state.offset)
+  const searchTerm = useSelector(state => state.searchTerm)
   
   const dispatch = useDispatch()
   

@@ -1,5 +1,9 @@
-const ClearIcon = ({ hidden, onClick }) => {  
-  const containerStyles = () => hidden ? 'clear-container hidden' : 'clear-container'
+import { useSelector } from 'react-redux'
+
+const ClearIcon = ({ onClick }) => {  
+  const searchTerm = useSelector(state => state.searchTerm)
+
+  const containerStyles = () => searchTerm === "" ? 'clear-container hidden' : 'clear-container'
   
   return (
     <div 
