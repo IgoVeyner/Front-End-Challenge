@@ -9,19 +9,11 @@ import AppLoading from './components/AppLoading';
 import { setPreferences } from './redux/actions/preferencesActions';
 import AppError from './components/AppError';
 import useGetAllPreferences from './hooks/useGetAllPreferences';
-import { v4 as uuidv4 } from 'uuid';
+import useUpdateKey from './hooks/useUpdateKey';
 
 function App() {
-  const [searchBarId, setSearchBarId] = useState(uuidv4())
-  const [favoritesListId, setFavoritesListId] = useState(1)
   const [busy, setBusy] = useState(true)
   const [error, setError] = useState(false)
-
-  const resetFavoritesList = () => {
-    setFavoritesListId(favoritesListId + 1)
-  }
-
-  const resetSearchBar = () => setSearchBarId(uuidv4())
 
   const renderComponents = () => {
     if (error) return <AppError onPress={getAllPreferences} />
@@ -39,6 +31,8 @@ function App() {
     )
   }
 
+  const [favoritesListId, resetFavoritesList] = useUpdateKey()
+  const [searchBarId, resetSearchBar] = useUpdateKey()
   const getAllPreferences = useGetAllPreferences(setPreferences, setError, setBusy)
   useFetchRequest(getAllPreferences)
 
