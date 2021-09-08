@@ -50,7 +50,7 @@ To go along with the favorites list I've implemented a feature to quickly search
 
 ### Clear button
 
-![clear button](./frontend/public/Clear-Search.gif)
+![clear button](./frontend/public/clear-button.gif)
 
 A small quality of life improvement that allows you to quickly reset the searchbar. Its hidden until a non-white space character is input into the searchbar.
 
