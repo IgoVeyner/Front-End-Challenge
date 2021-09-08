@@ -1,26 +1,21 @@
 import { useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { updateSearchTerm } from '../redux/actions/searchTermActions'
+import { useSelector } from 'react-redux'
 import FilterIcon from './FilterIcon'
 import ClearIcon from './ClearIcon'
 import SearchInput from './SearchInput'
 import useSearch from '../hooks/useSearch'
+import useClearInput from '../hooks/useClearInput'
 
 const SearchBar = () => {
   const [inputId, setInputId] = useState(0)
+  const [needsClear, setNeedsClear] = useState(false)
 
   const searchTerm = useSelector(state => state.searchTerm)
 
-  const dispatch = useDispatch()
-  const resetSearchTerm = () => dispatch(updateSearchTerm(''))
-  const resetSearchInput = () => setInputId(inputId + 1)
+  const handleClick = () => setNeedsClear(true)
 
-  const handleClick = () => {
-    resetSearchTerm()
-    resetSearchInput()
-  }
-  
   useSearch(searchTerm)
+  useClearInput(inputId, setInputId, needsClear, setNeedsClear)
   
   return (
     <div className="search-container">
