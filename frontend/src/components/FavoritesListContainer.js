@@ -1,22 +1,16 @@
-import { useState, useRef } from 'react'
+import { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import FavoritesList from './FavoritesList'
 import Loading from './Loading'
 import FavoritesError from './FavoritesError'
 import Pagination from './Pagination'
 import useGetPreferences from '../hooks/useGetPreferences'
-import useNextClick from '../hooks/useNextClick'
-import usePrevClick from '../hooks/usePrevClick'
-import { prevDisableCheck, nextDisableCheck } from '../services/pagination'
 import { updatePreferncesOffset } from '../redux/actions/preferencesOffsetActions'
 import useNeedsReload from '../hooks/useNeedsReload'
 import useOffsetUpdated from '../hooks/useOffsetUpdated'
+import usePagination from '../hooks/usePagination'
 
 const FavoritesListContainer = ({ onPress }) => {
-  const interval = useRef(null)
-  const nextPageClicks = useRef(0)
-  const prevPageClicks = useRef(0)
-
   const [error, setError] = useState(false)
   const [favorites, setFavorites] = useState([])
   const [busy, setBusy] = useState(true)
@@ -27,13 +21,9 @@ const FavoritesListContainer = ({ onPress }) => {
   const dispatch = useDispatch()
   const updateOffset = (data) => dispatch(updatePreferncesOffset(data))
 
-  const disabledStatus = [
-    prevDisableCheck(busy, error, favorites, offset), 
-    nextDisableCheck(busy, error, favorites, offset)
-  ]
-
-  const nextPage = useNextClick(favorites, offset, nextPageClicks, interval, updateOffset)
-  const prevPage = usePrevClick(offset, prevPageClicks, interval, updateOffset)
+  const { disabledStatus, nextPage, prevPage } = usePagination(
+    favorites, offset, busy, error, updateOffset
+  )
   
   useGetPreferences(offset, setError, setFavorites, needsReload, setBusy, busy)
   useNeedsReload(needsReload, setBusy)
