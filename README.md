@@ -40,7 +40,9 @@ List of favorites can become hard to read with many favorites.
 
 In the original mockup the list of favorites replaces the header. While this works for a small number of selections, as the list grows the size of the view will grow and it can become unruly. I've moved all of the user's favorite's to it's own container below the search results. This is list is set up with pagination the same way as the results. This makes managing your favorites more manageable!
 
-### Lookup City on Click
+### Click Lookup
+
+![Click lookup](./frontend/public/Click-Search.gif)
 
 Removing favorites is time consuming. You have to manually type in the city or it's subcountry or country.
 
@@ -48,14 +50,18 @@ To go along with the favorites list I've implemented a feature to quickly search
 
 ### Clear button
 
-![clear button](./frontend/public/Clear-Button.png)
+![clear button](./frontend/public/Clear-Search.gif)
 
 A small quality of life improvement that allows you to quickly reset the searchbar. Its hidden until a non-white space character is input into the searchbar.
 
 ### Display Loading
 
+![Loading](./frontend/public/Loading.gif)
+
 Requests with this API can take up to 5 seconds to resolve. I've added various loading screens to signal to the user that the application is loading.
 
 ### Display Failures
+
+![Failure](./frontend/public/Error.gif)
 
 Requests with this API fail ~ 10% of the time. I've added components to display failures to the user. I've also included buttons or click functionality to re-try the individual failed request.
