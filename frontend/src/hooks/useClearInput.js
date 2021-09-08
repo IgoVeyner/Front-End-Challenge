@@ -3,15 +3,14 @@ import { useDispatch } from 'react-redux'
 import { updateSearchTerm } from '../redux/actions/searchTermActions'
 
 const useClearInput = () => {
-  const [inputId, setInputId] = useState(0)
+  const [id, setId] = useState(0)
   const [needsClear, setNeedsClear] = useState(false)
 
   const dispatch = useDispatch()
 
   useEffect(() => {
-
     const resetSearchTerm = () => dispatch(updateSearchTerm(''))
-    const resetSearchInput = () => setInputId(inputId + 1)
+    const resetSearchInput = () => setId(id + 1)
 
     const handleSearchInput = () => {
       resetSearchTerm()
@@ -22,12 +21,11 @@ const useClearInput = () => {
       handleSearchInput()
       setNeedsClear(false)
     } 
-
-  }, [dispatch, needsClear, inputId, setNeedsClear, setInputId]);
+  }, [dispatch, needsClear, id, setNeedsClear, setId]);
 
   return {
     handleClick: () => setNeedsClear(true),
-    key: inputId
+    key: id
   }
 }
 
