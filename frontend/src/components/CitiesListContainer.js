@@ -49,7 +49,8 @@ const CitiesListContainer = () => {
       />
       
       <div className="list-inner-container">
-        {renderInnerComponent()}
+        {/* {renderInnerComponent()} */}
+        <SearchError />
       </div>
 
     </div>
