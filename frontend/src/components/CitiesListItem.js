@@ -6,6 +6,7 @@ import useChecked from '../hooks/useChecked'
 // TODO: 
 //  combine and debounce the PATCH requests to limit API requests
 //  & to make reload of favorites container faster
+//  Fix all Cities List Item rerendering on favorites update?
 const CitiesListItem = ({ city }) => {
   const { checked, setChecked, previousState, handleClick } = useChecked(city.geonameid)
   useFavoritesPatchRequest(city.geonameid, previousState, checked, setChecked)
