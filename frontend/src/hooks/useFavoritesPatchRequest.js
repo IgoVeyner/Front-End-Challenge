@@ -3,17 +3,26 @@ import { useDispatch } from 'react-redux'
 import { startPreferenceReload } from '../redux/actions/preferencesReloadActions'
 import { updatePreferences } from '../services/api'
 import { handleCheckboxError } from '../services/errors'
+import { setPreferences } from '../redux/actions/preferencesActions'
 
 const useFavoritesPatchRequest = (
     checked, previousState, cityId, 
-    setChecked, addToFavorites, removeFromFavorites
+    setChecked, favorites
   ) => {
   const dispatch = useDispatch()
   const isMounted = useRef(false)
   
   useEffect(() => {
     const setNeedsReload = () => dispatch(startPreferenceReload())
-    
+
+    const removeFromFavorites = () => {
+      dispatch(setPreferences(favorites.filter(id => id !== cityId)))
+    }
+  
+    const addToFavorites = () => {
+      dispatch(setPreferences([...favorites, cityId]))
+    }
+  
     let ignore = false
     const requestType = previousState.current === "UNCHECKED" ? "ADD" : "REMOVE"
 
@@ -33,20 +42,15 @@ const useFavoritesPatchRequest = (
           if (requestType === "ADD") {
             previousState.current = "CHECKED"
             setChecked("CHECKED")
+            addToFavorites()
           } else {
             previousState.current = "UNCHECKED"
             setChecked("UNCHECKED")
+            removeFromFavorites()
           }
           
           setNeedsReload()
         }
-      }
-
-      if (response.status !== 500) {
-        requestType === "ADD" ? 
-          addToFavorites()
-          :
-          removeFromFavorites()
       }
     }
 
@@ -57,7 +61,7 @@ const useFavoritesPatchRequest = (
     }
     
     return () => { ignore = true }
-  }, [cityId, checked, previousState, setChecked, dispatch, addToFavorites, removeFromFavorites])
+  }, [cityId, checked, previousState, setChecked, dispatch, favorites])
 }
 
 export default useFavoritesPatchRequest
