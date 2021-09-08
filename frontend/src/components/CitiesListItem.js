@@ -4,6 +4,9 @@ import Checkbox from "./Checkbox"
 import CitiesListItemText from './CitiesListItemText'
 import useFavoritesPatchRequest from '../hooks/useFavoritesPatchRequest'
 
+// TODO: 
+//  combine and debounce the PATCH requests to limit API requests
+//  & to make reload of favorites container faster
 const CitiesListItem = ({ city, initialState }) => {
   const favorites = useSelector(state => state.preferences)
 
