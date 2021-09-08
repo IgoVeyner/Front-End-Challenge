@@ -1,29 +1,11 @@
-import { useMemo, useRef } from 'react'
-import { useDispatch } from 'react-redux'
-import { resetOffset } from "../redux/actions/offsetActions"
-import { updateSearchTerm } from '../redux/actions/searchTermActions'
-import useDebounceCleanup from '../hooks/useDebounceCleanup'
-import debounce from 'lodash.debounce';
+import { useRef } from 'react'
 import useUpdateInputValue from '../hooks/useUpdateInputValue'
+import useDebouncedSearch from '../hooks/useDebounceSearch'
 
 const SearchInput = () => {
   const searchbar = useRef(null)
+  const handleChange = useDebouncedSearch()
 
-  const dispatch = useDispatch()
-
-  const debouncedResults = useMemo(() => {
-    const resetOffsetIndex = () => dispatch(resetOffset())
-    const setNewSearchTerm = (query) => dispatch(updateSearchTerm(query))
-    
-    const handleChange = (e) => {
-      setNewSearchTerm(e.target.value)
-      resetOffsetIndex()
-    }
-    
-    return debounce(handleChange, 400)
-  }, [dispatch])
-
-  useDebounceCleanup(debouncedResults)
   useUpdateInputValue(searchbar)
 
   return (
@@ -31,7 +13,7 @@ const SearchInput = () => {
       ref={searchbar}
       className="searchbar"
       type="text" 
-      onChange={debouncedResults} 
+      onChange={handleChange} 
       placeholder="Type to filter by city name or country"
     />
   )
