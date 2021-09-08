@@ -20,7 +20,7 @@ const SearchBar = () => {
     resetSearchInput()
   }
   
-  useSearch()
+  useSearch(searchTerm)
   
   return (
     <div className="search-container">

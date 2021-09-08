@@ -1,44 +1,39 @@
-import { useCallback, useEffect } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { handleError } from '../services/errors'
 import { getCities } from '../services/api'
 import { setCities } from '../redux/actions/citiesActions'
 import { setSearchError } from '../redux/actions/searchErrorActions'
 import { setLoading } from "../redux/actions/searchLoadingActions"
 
-const useSearch = () => {
+const useSearch = (searchTerm) => {
   const offset = useSelector(state => state.offset)
-  const searchTerm = useSelector(state => state.searchTerm)
   
   const dispatch = useDispatch()
   
-  // TODO: abstract & refactor with Redux-Thunk
-  const handleSubmit = useCallback(() => {
+  useEffect(() => {
+    let ignore = false 
+
     const setBusy = () => dispatch(setLoading())
     const updateCities = (parsed) => dispatch(setCities(parsed, offset))
     const setSearchErrorToTrue = () => dispatch(setSearchError())
+    
+    async function getData() {
+      setBusy()
+      const response = await getCities(searchTerm, offset)
+      if(!ignore) {
+        if (response.statusCode === 500) {
+          handleError(response, setSearchErrorToTrue) 
+        } else {
+          updateCities(response)
+        }
+      }
+    }
 
-    setBusy()
-    getCities(searchTerm, offset)
-    .then(parsed => {
+    getData()
 
-      // 500 error code comes back as false positive so we need to error handle here
-      parsed.statusCode === 500 ? 
-        handleError(parsed, setSearchErrorToTrue) 
-        : 
-        updateCities(parsed)
-    })
-    .catch(error => {
-
-      // does not catch 500 error code
-      handleError(error, setSearchErrorToTrue)
-    })
-
-  }, [searchTerm, offset, dispatch])
-
-  useEffect(() => {
-    handleSubmit()
-  }, [handleSubmit])
+    return () => {ignore = true}
+  }, [searchTerm, dispatch, offset]);
 }
 
 export default useSearch
