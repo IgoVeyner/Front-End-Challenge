@@ -14,10 +14,10 @@ const CitiesList = ({ cities }) => {
       const initialState = favorites.includes(city.geonameid) ? "CHECKED" : "UNCHECKED"
 
       return <CitiesListItem 
-        city={city} 
-        key={city.geonameid} 
-        initalState={initialState}
-      />
+          city={city} 
+          key={city.geonameid} 
+          initialState={initialState}
+        />
     })
   }
   
